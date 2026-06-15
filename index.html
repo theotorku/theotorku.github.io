@@ -68,6 +68,11 @@
           </p>
         </div>
       </div>
+      <div class="hero-accent" aria-hidden="true"></div>
+      <a href="#work-on" class="scroll-indicator" aria-label="Scroll to content">
+        <span>Scroll</span>
+        <span class="scroll-indicator__arrow"></span>
+      </a>
     </section>
 
     <!-- What I Work On -->
@@ -78,7 +83,7 @@
           <h2 class="section-title">What I Work On</h2>
         </div>
         
-        <div class="principles-grid">
+        <div class="card-grid cols-2">
           <div class="principle-card observe-animation">
             <p class="principle-number">01</p>
             <h3 class="principle-title">Multi-Agent AI Systems</h3>
@@ -130,7 +135,7 @@
           </p>
         </div>
         
-        <div class="principles-grid">
+        <div class="card-grid cols-3">
           <div class="principle-card observe-animation">
             <p class="principle-number">01</p>
             <h3 class="principle-title">Judgment over Credentials</h3>
@@ -187,55 +192,41 @@
           <h2 class="section-title">Explore</h2>
         </div>
         
-        <div class="work-list">
-          <a href="pages/journey.html" class="work-item observe-animation">
-            <div class="work-item-content">
-              <h3 class="work-item-title">Journey</h3>
-              <p class="work-item-description">
-                A reverse-chronological decision log. Context, constraints, choices, 
-                and what I learned from each.
-              </p>
-            </div>
-            <div class="work-item-meta">
-              <span class="btn-arrow"></span>
-            </div>
+        <div class="card-grid cols-2">
+          <a href="pages/journey.html" class="principle-card card-link observe-animation">
+            <h3 class="principle-title">Journey</h3>
+            <p class="principle-description">
+              A reverse-chronological decision log — context, constraints, the choice
+              made, and what I learned from each.
+            </p>
+            <span class="card-cta">Read the decisions</span>
           </a>
-          
-          <a href="pages/work.html" class="work-item observe-animation">
-            <div class="work-item-content">
-              <h3 class="work-item-title">Work</h3>
-              <p class="work-item-description">
-                Selected case studies. Problem framing, architecture decisions, 
-                tradeoffs, and outcomes.
-              </p>
-            </div>
-            <div class="work-item-meta">
-              <span class="btn-arrow"></span>
-            </div>
+
+          <a href="pages/work.html" class="principle-card card-link observe-animation">
+            <h3 class="principle-title">Work</h3>
+            <p class="principle-description">
+              Selected case studies. Problem framing, architecture decisions,
+              tradeoffs, and honest status.
+            </p>
+            <span class="card-cta">See the work</span>
           </a>
-          
-          <a href="pages/writing.html" class="work-item observe-animation">
-            <div class="work-item-content">
-              <h3 class="work-item-title">Writing</h3>
-              <p class="work-item-description">
-                Essays on systems, technology, and the patterns I see across problems.
-              </p>
-            </div>
-            <div class="work-item-meta">
-              <span class="btn-arrow"></span>
-            </div>
+
+          <a href="pages/writing.html" class="principle-card card-link observe-animation">
+            <h3 class="principle-title">Writing</h3>
+            <p class="principle-description">
+              Essays on building AI products — multi-agent systems, governance,
+              and the gap between built and shipped.
+            </p>
+            <span class="card-cta">Read essays</span>
           </a>
-          
-          <a href="pages/engage.html" class="work-item observe-animation">
-            <div class="work-item-content">
-              <h3 class="work-item-title">Engage</h3>
-              <p class="work-item-description">
-                How to work with me. Different paths for recruiters, founders, and investors.
-              </p>
-            </div>
-            <div class="work-item-meta">
-              <span class="btn-arrow"></span>
-            </div>
+
+          <a href="pages/engage.html" class="principle-card card-link observe-animation">
+            <h3 class="principle-title">Engage</h3>
+            <p class="principle-description">
+              How to work with me. Different paths for recruiters, founders,
+              and investors.
+            </p>
+            <span class="card-cta">Get in touch</span>
           </a>
         </div>
       </div>
@@ -253,29 +244,31 @@
           </p>
         </div>
         
-        <div class="principles-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-          <a href="pages/simulator.html" class="principle-card observe-animation" style="text-decoration: none; display: block;">
-            <p class="principle-number">⚖️</p>
+        <div class="card-grid cols-2">
+          <a href="pages/simulator.html" class="principle-card card-link observe-animation">
+            <p class="feature-icon" aria-hidden="true">⚖️</p>
             <h3 class="principle-title">Decision Simulator</h3>
             <p class="principle-description">
-              Face the same constrained choices I've faced. Make your call, 
+              Face the same constrained choices I've faced. Make your call,
               then see what I chose and why. Calibrate your judgment against mine.
             </p>
             <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-tertiary);">
               ~8 minutes · 5 scenarios
             </p>
+            <span class="card-cta">Try it</span>
           </a>
-          
-          <a href="pages/framing.html" class="principle-card observe-animation" style="text-decoration: none; display: block;">
-            <p class="principle-number">🔍</p>
+
+          <a href="pages/framing.html" class="principle-card card-link observe-animation">
+            <p class="feature-icon" aria-hidden="true">🔍</p>
             <h3 class="principle-title">Problem Framing</h3>
             <p class="principle-description">
-              Describe your problem. Get a first-pass technical decomposition: 
+              Describe your problem. Get a first-pass technical decomposition:
               questions I'd ask, patterns that apply, what I'd build first.
             </p>
             <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-tertiary);">
               Interactive · Working sample of my thinking
             </p>
+            <span class="card-cta">Try it</span>
           </a>
         </div>
       </div>
@@ -284,13 +277,19 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="container footer-inner">
-      <p class="footer-text">© 2026 Theo Torku. Built with intention.</p>
-      <ul class="footer-links">
-        <li><a href="mailto:theo@proplansolutions.io" class="footer-link">Email</a></li>
-        <li><a href="https://linkedin.com/company/proplansolutions" class="footer-link">LinkedIn</a></li>
-        <li><a href="https://github.com/theotorku" class="footer-link">GitHub</a></li>
-      </ul>
+    <div class="container">
+      <div class="footer-cta">
+        <p class="footer-cta-text">Building something that needs judgment, not just hands? Let's talk.</p>
+        <a href="pages/engage.html" class="btn btn-primary btn-arrow">Start a Conversation</a>
+      </div>
+      <div class="footer-inner">
+        <p class="footer-text">© 2026 Theo Torku. Built with intention.</p>
+        <ul class="footer-links">
+          <li><a href="mailto:theo@proplansolutions.io" class="footer-link">Email</a></li>
+          <li><a href="https://linkedin.com/company/proplansolutions" class="footer-link">LinkedIn</a></li>
+          <li><a href="https://github.com/theotorku" class="footer-link">GitHub</a></li>
+        </ul>
+      </div>
     </div>
   </footer>
 

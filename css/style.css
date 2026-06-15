@@ -852,6 +852,180 @@ main {
 }
 
 /* ==========================================================================
+   UX Enhancements — hierarchy, card system, interactions
+   ========================================================================== */
+
+/* --- Tighter vertical rhythm between sections --- */
+.section { padding: var(--space-20) 0; }
+
+/* --- Clearer type tiers (medium step between hero and section) --- */
+.hero-title { font-size: clamp(2.5rem, 5.5vw, 4rem); }
+.section-title { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+.section-label { margin-bottom: var(--space-4); }
+.principle-title { font-size: var(--text-lg); }
+
+/* --- Snappier entrances (was 0.6s, felt like loading) --- */
+.animate-in { animation-duration: 0.35s; }
+
+/* Scroll-reveal: use the `translate` property so it never fights `transform` hovers */
+.observe-animation {
+  opacity: 0;
+  translate: 0 16px;
+  transition: opacity 0.45s ease, translate 0.45s ease;
+}
+.observe-animation.visible {
+  opacity: 1;
+  translate: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .observe-animation { opacity: 1; translate: 0 0; transition: none; }
+}
+
+/* --- Hero: visual balance + a clear "there's more below" cue --- */
+.hero { position: relative; overflow: hidden; }
+.hero .container { position: relative; z-index: 1; }
+.hero-accent {
+  position: absolute;
+  top: 50%;
+  right: -32px;
+  transform: translateY(-50%);
+  width: 380px;
+  height: 380px;
+  background-image: radial-gradient(currentColor 1.5px, transparent 1.6px);
+  background-size: 26px 26px;
+  color: var(--color-text-tertiary);
+  opacity: 0.16;
+  -webkit-mask-image: radial-gradient(circle at center, #000 30%, transparent 70%);
+          mask-image: radial-gradient(circle at center, #000 30%, transparent 70%);
+  pointer-events: none;
+}
+@media (max-width: 1024px) { .hero-accent { display: none; } }
+
+.scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-8);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-text-tertiary);
+  z-index: 1;
+}
+.scroll-indicator__arrow {
+  width: 16px;
+  height: 16px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.4; }
+  50%      { transform: rotate(45deg) translate(3px, 3px); opacity: 1; }
+}
+@media (max-width: 640px) { .scroll-indicator { display: none; } }
+@media (prefers-reduced-motion: reduce) { .scroll-indicator__arrow { animation: none; } }
+
+/* --- One consistent card grid; incomplete rows center (no orphans) --- */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6);
+  margin-top: var(--space-10);
+}
+.card-grid > * { flex: 1 1 280px; margin: 0; }
+.card-grid.cols-2 > * {
+  flex: 1 1 calc(50% - var(--space-6) / 2);
+  max-width: calc(50% - var(--space-6) / 2);
+}
+.card-grid.cols-3 > * {
+  flex: 1 1 calc(33.333% - var(--space-6) * 2 / 3);
+  max-width: calc(33.333% - var(--space-6) * 2 / 3);
+}
+@media (max-width: 1024px) {
+  .card-grid.cols-3 > * {
+    flex-basis: calc(50% - var(--space-6) / 2);
+    max-width: calc(50% - var(--space-6) / 2);
+  }
+}
+@media (max-width: 640px) {
+  .card-grid.cols-2 > *,
+  .card-grid.cols-3 > * { flex-basis: 100%; max-width: 100%; }
+}
+
+/* --- Clickable cards read as interactive (vs. static info cards) --- */
+.card-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--transition-base),
+              box-shadow var(--transition-base),
+              border-color var(--transition-base),
+              background-color var(--transition-base);
+}
+.card-link:hover {
+  border-color: var(--color-text-primary);
+  background-color: var(--color-bg-subtle);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  .card-link:hover { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45); }
+}
+.card-link .principle-description { flex: 1; }
+.card-cta {
+  margin-top: var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.card-cta::after {
+  content: '→';
+  transition: transform var(--transition-fast);
+}
+.card-link:hover .card-cta::after { transform: translateX(4px); }
+
+/* Larger icon for interactive feature cards */
+.feature-icon {
+  font-size: 2.25rem;
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+
+/* --- Nav: location cue + scroll transition --- */
+.nav { transition: box-shadow var(--transition-base), border-color var(--transition-base); }
+.nav-logo.active { color: var(--color-text-primary); font-weight: 500; }
+
+/* --- Footer: a warmer close with an explicit nudge --- */
+.footer-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-bottom: var(--space-10);
+  margin-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-border);
+}
+.footer-cta-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, var(--text-3xl));
+  color: var(--color-text-primary);
+  max-width: 600px;
+  line-height: 1.25;
+}
+
+/* ==========================================================================
    Print Styles
    ========================================================================== */
 

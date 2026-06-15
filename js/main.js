@@ -63,29 +63,29 @@
     const observer = new IntersectionObserver(function(entries, observer) {
       entries.forEach(function(entry, index) {
         if (entry.isIntersecting) {
-          // Stagger the animation based on element order in viewport
-          const delay = index * 100;
+          // Stagger reveal slightly based on order within this batch
+          const delay = index * 80;
 
           setTimeout(function() {
-            entry.target.classList.add('animate-in', 'visible');
+            // Hidden/visible state is driven entirely by the `.visible` class
+            // (which animates `opacity` + `translate`), leaving `transform`
+            // free for hover lifts on interactive cards.
+            entry.target.classList.add('visible');
           }, delay);
 
-          // Stop observing once animated
+          // Stop observing once revealed
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
     observeElements.forEach(function(element) {
-      // Set initial state
-      element.style.opacity = '0';
-      element.style.transform = 'translateY(20px)';
       observer.observe(element);
     });
   } else {
     // Fallback for browsers without IntersectionObserver
     observeElements.forEach(function(element) {
-      element.classList.add('animate-in', 'visible');
+      element.classList.add('visible');
     });
   }
 
@@ -125,6 +125,15 @@
   function setActiveNavLink() {
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll('.nav-link');
+
+    // On the homepage, no nav item applies — mark the logo so the user still
+    // has a sense of location.
+    const onHome = currentPath === '/' ||
+      /\/(index\.html)?$/.test(currentPath) && !currentPath.includes('/pages/');
+    const logo = document.querySelector('.nav-logo');
+    if (logo && onHome) {
+      logo.classList.add('active');
+    }
 
     navLinks.forEach(function(link) {
       link.classList.remove('active');
@@ -186,10 +195,8 @@
     document.documentElement.style.setProperty('--transition-base', '0ms');
     document.documentElement.style.setProperty('--transition-slow', '0ms');
 
-    // Immediately show all animated elements
+    // Immediately reveal all scroll-animated elements
     observeElements.forEach(function(element) {
-      element.style.opacity = '1';
-      element.style.transform = 'none';
       element.classList.add('visible');
     });
   }
