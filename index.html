@@ -27,6 +27,8 @@
   <link rel="canonical" href="https://theotorku.github.io/">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <!-- Navigation -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="container nav-inner">
@@ -47,28 +49,53 @@
     </div>
   </nav>
 
-  <main>
+  <main id="main">
     <!-- Hero Section -->
     <section class="hero">
       <div class="container">
-        <div class="hero-content">
-          <p class="hero-label animate-in">Technical Operator · Systems Thinker</p>
-          
-          <h1 class="hero-title animate-in delay-1">
-            I build software that <em>compounds</em>—<br>
-            systems designed for decisions,<br>
-            not dashboards.
-          </h1>
-          
-          <p class="hero-subtitle animate-in delay-2">
-            Founder of <strong>ProPlan Solutions</strong>, where I build Anthropic-native,
-            multi-agent AI systems across vertical markets. I care about what gets shipped,
-            what survives contact with real users, and whether an autonomous system can be
-            trusted — which means audited.
-          </p>
+        <div class="hero-grid">
+          <div class="hero-content">
+            <p class="hero-label animate-in">Technical Operator · Systems Thinker</p>
+
+            <h1 class="hero-title animate-in delay-1">
+              I build software that <em>compounds</em>—<br>
+              systems designed for decisions,<br>
+              not dashboards.
+            </h1>
+
+            <p class="hero-subtitle animate-in delay-2">
+              Founder of <strong>ProPlan Solutions</strong>, where I build Anthropic-native,
+              multi-agent AI systems across vertical markets. I care about what gets shipped,
+              what survives contact with real users, and whether an autonomous system can be
+              trusted — which means audited.
+            </p>
+
+            <div class="hero-actions animate-in delay-3">
+              <a href="pages/work.html" class="btn btn-primary btn-arrow">See my work</a>
+              <a href="pages/engage.html" class="btn">Get in touch</a>
+            </div>
+          </div>
+
+          <div class="hero-visual animate-in delay-2" aria-hidden="true">
+<pre>┌──────────────────────────┐
+│  PLAN            reason  │
+│  claude · sonnet 4.6     │
+└─────────────┬────────────┘
+              │
+              ▼
+┌──────────────────────────┐
+│  EXECUTE     controlled  │
+│  cron · events · queue   │
+└─────────────┬────────────┘
+              │
+              ▼
+┌──────────────────────────┐
+│  AUDIT LOG    immutable  │
+│  cost · tokens · replay  │
+└──────────────────────────┘</pre>
+          </div>
         </div>
       </div>
-      <div class="hero-accent" aria-hidden="true"></div>
       <a href="#work-on" class="scroll-indicator" aria-label="Scroll to content">
         <span>Scroll</span>
         <span class="scroll-indicator__arrow"></span>
@@ -124,7 +151,7 @@
     </section>
 
     <!-- How I Think -->
-    <section class="section" id="principles" style="background-color: var(--color-bg-subtle);">
+    <section class="section section-alt" id="principles" style="background-color: var(--color-bg-subtle);">
       <div class="container">
         <div class="section-header">
           <p class="section-label">Operating Principles</p>
@@ -176,10 +203,30 @@
             <p class="principle-number">05</p>
             <h3 class="principle-title">Signal over Noise</h3>
             <p class="principle-description">
-              Everything that doesn't directly serve the goal is a distraction. 
+              Everything that doesn't directly serve the goal is a distraction.
               Ruthless prioritization isn't mean—it's respectful.
             </p>
           </div>
+
+          <div class="principle-card observe-animation">
+            <p class="principle-number">06</p>
+            <h3 class="principle-title">Shipping over Polishing</h3>
+            <p class="principle-description">
+              A working product in front of one real user beats a perfect one in
+              front of none. Built is not the same as adopted.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mid-page engagement prompt -->
+    <section class="section-sm">
+      <div class="container cta-band">
+        <p class="cta-band-text">Curious how this thinking holds up in real systems?</p>
+        <div class="cta-band-actions">
+          <a href="pages/work.html" class="btn btn-primary btn-arrow">See the work</a>
+          <a href="pages/engage.html" class="btn">Get in touch</a>
         </div>
       </div>
     </section>
@@ -194,6 +241,7 @@
         
         <div class="card-grid cols-2">
           <a href="pages/journey.html" class="principle-card card-link observe-animation">
+            <p class="card-kicker">5 real decisions · reverse-chronological</p>
             <h3 class="principle-title">Journey</h3>
             <p class="principle-description">
               A reverse-chronological decision log — context, constraints, the choice
@@ -203,6 +251,7 @@
           </a>
 
           <a href="pages/work.html" class="principle-card card-link observe-animation">
+            <p class="card-kicker">5 case studies · incl. Marie AI (live)</p>
             <h3 class="principle-title">Work</h3>
             <p class="principle-description">
               Selected case studies. Problem framing, architecture decisions,
@@ -212,6 +261,7 @@
           </a>
 
           <a href="pages/writing.html" class="principle-card card-link observe-animation">
+            <p class="card-kicker">5 essays · AI systems &amp; operating</p>
             <h3 class="principle-title">Writing</h3>
             <p class="principle-description">
               Essays on building AI products — multi-agent systems, governance,
@@ -221,6 +271,7 @@
           </a>
 
           <a href="pages/engage.html" class="principle-card card-link observe-animation">
+            <p class="card-kicker">Recruiters · Founders · Investors</p>
             <h3 class="principle-title">Engage</h3>
             <p class="principle-description">
               How to work with me. Different paths for recruiters, founders,
@@ -233,7 +284,7 @@
     </section>
 
     <!-- Interactive Tools Section -->
-    <section class="section" style="background-color: var(--color-bg-subtle);">
+    <section class="section section-alt" style="background-color: var(--color-bg-subtle);">
       <div class="container">
         <div class="section-header">
           <p class="section-label">Interactive</p>
@@ -246,7 +297,15 @@
         
         <div class="card-grid cols-2">
           <a href="pages/simulator.html" class="principle-card card-link observe-animation">
-            <p class="feature-icon" aria-hidden="true">⚖️</p>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="5" cy="12" r="2.4"/>
+                <circle cx="19" cy="5.5" r="2.4"/>
+                <circle cx="19" cy="18.5" r="2.4"/>
+                <path d="M7.3 11C11.5 9.2 13 7 16.6 6"/>
+                <path d="M7.3 13C11.5 14.8 13 17 16.6 18"/>
+              </svg>
+            </span>
             <h3 class="principle-title">Decision Simulator</h3>
             <p class="principle-description">
               Face the same constrained choices I've faced. Make your call,
@@ -259,7 +318,15 @@
           </a>
 
           <a href="pages/framing.html" class="principle-card card-link observe-animation">
-            <p class="feature-icon" aria-hidden="true">🔍</p>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8"/>
+                <path d="M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8"/>
+                <path d="M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16"/>
+                <path d="M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/>
+                <circle cx="12" cy="12" r="2.5"/>
+              </svg>
+            </span>
             <h3 class="principle-title">Problem Framing</h3>
             <p class="principle-description">
               Describe your problem. Get a first-pass technical decomposition:

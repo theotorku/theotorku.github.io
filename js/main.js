@@ -133,10 +133,12 @@
     const logo = document.querySelector('.nav-logo');
     if (logo && onHome) {
       logo.classList.add('active');
+      logo.setAttribute('aria-current', 'page');
     }
 
     navLinks.forEach(function(link) {
       link.classList.remove('active');
+      link.removeAttribute('aria-current');
 
       const linkPath = link.getAttribute('href');
 
@@ -145,6 +147,7 @@
           currentPath.endsWith(linkPath) ||
           (linkPath !== '/' && currentPath.includes(linkPath.replace('/pages/', '').replace('.html', '')))) {
         link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
       }
     });
   }

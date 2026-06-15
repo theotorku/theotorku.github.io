@@ -16,7 +16,7 @@
   --color-bg-subtle: #F5F5F5;
   --color-text-primary: #1A1A1A;
   --color-text-secondary: #666666;
-  --color-text-tertiary: #999999;
+  --color-text-tertiary: #6B6B6B;
   --color-accent: #0A0A0A;
   --color-accent-hover: #333333;
   --color-border: #E5E5E5;
@@ -70,8 +70,8 @@
     --color-bg-elevated: #141414;
     --color-bg-subtle: #1A1A1A;
     --color-text-primary: #FAFAFA;
-    --color-text-secondary: #A0A0A0;
-    --color-text-tertiary: #666666;
+    --color-text-secondary: #A8A8A8;
+    --color-text-tertiary: #8A8A8A;
     --color-accent: #FFFFFF;
     --color-accent-hover: #E0E0E0;
     --color-border: #2A2A2A;
@@ -1034,12 +1034,134 @@ main {
   .footer {
     display: none;
   }
-  
+
   main {
     margin-top: 0;
   }
-  
+
   .section {
     padding: var(--space-8) 0;
   }
 }
+
+/* ==========================================================================
+   UX Enhancements v2 — accessibility, hero layout, polish
+   ========================================================================== */
+
+/* --- Readable overline labels (was 12px, low contrast) --- */
+.section-label,
+.hero-label { font-size: 0.8125rem; }
+
+/* --- Visible keyboard focus (WCAG 2.4.7) --- */
+:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+a:focus-visible,
+.btn:focus-visible,
+.card-link:focus-visible,
+.nav-link:focus-visible,
+.nav-logo:focus-visible,
+.option-card:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 3px;
+}
+/* Don't show the ring for mouse users that still trigger :focus */
+:focus:not(:focus-visible) { outline: none; }
+
+/* --- Skip to content (WCAG 2.4.1) --- */
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -200px;
+  z-index: 1100;
+  background-color: var(--color-text-primary);
+  color: var(--color-bg);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: 4px;
+  transition: top var(--transition-fast);
+}
+.skip-link:focus {
+  top: var(--space-3);
+  color: var(--color-bg);
+}
+
+/* --- Two-column hero: fills the dead space, balances the headline --- */
+.hero-accent { display: none; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+.hero-content { max-width: 640px; }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+.hero-visual {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-subtle);
+  border-radius: 8px;
+  padding: var(--space-6) var(--space-5);
+  overflow-x: auto;
+}
+.hero-visual pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  white-space: pre;
+  margin: 0;
+}
+.hero-visual .hv-dim { color: var(--color-text-tertiary); }
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: var(--space-10); }
+  .hero-visual { display: none; }
+  .hero-content { max-width: 100%; }
+}
+
+/* --- SVG feature icons (replacing emoji) --- */
+.feature-icon {
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+  line-height: 1;
+}
+.feature-icon svg { width: 30px; height: 30px; display: block; }
+
+/* --- Explore card kicker: concrete info beyond the nav --- */
+.card-kicker {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+/* --- Clearer section boundaries for pacing --- */
+.section-alt { border-top: 1px solid var(--color-border); }
+
+/* --- Mid-page engagement prompt --- */
+.cta-band { text-align: center; }
+.cta-band-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, var(--text-3xl));
+  color: var(--color-text-primary);
+  max-width: 640px;
+  margin: 0 auto var(--space-8);
+  line-height: 1.25;
+}
+.cta-band-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+/* Subtle feedback on static info cards too */
+.principle-card:not(.card-link):hover { border-color: var(--color-border-strong); }
