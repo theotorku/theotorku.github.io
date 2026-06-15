@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Essays on building AI products — multi-agent systems, governance, decision compression, and the gap between built and shipped.">
+  <meta property="og:title" content="Writing — Theo Torku">
+  <meta property="og:description" content="Essays on AI systems, multi-agent governance, product restraint, and operating a portfolio of products.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../favicon.svg">
+
+  <title>Writing — Theo Torku</title>
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .essay-full { max-width: 720px; margin: 0 auto; }
+    .essay-full h2 { font-size: var(--text-3xl); margin-bottom: var(--space-6); }
+    .essay-full h3 { font-family: var(--font-body); font-size: var(--text-lg); font-weight: 500; margin-top: var(--space-8); margin-bottom: var(--space-4); }
+    .essay-full p { font-size: var(--text-base); line-height: 1.8; margin-bottom: var(--space-6); color: var(--color-text-secondary); }
+    .essay-full p:first-of-type { font-size: var(--text-lg); }
+    .essay-full blockquote { border-left: 3px solid var(--color-border-strong); padding-left: var(--space-6); margin: var(--space-8) 0; font-style: italic; color: var(--color-text-secondary); }
+    .essay-full code { background: var(--color-bg-subtle); padding: 2px 6px; font-size: 0.9em; border-radius: 3px; }
+    .essay-full ul { margin-bottom: var(--space-6); padding-left: var(--space-6); color: var(--color-text-secondary); }
+    .essay-full li { margin-bottom: var(--space-2); line-height: 1.7; }
+    .essay-meta { font-size: var(--text-sm); color: var(--color-text-tertiary); margin-bottom: var(--space-8); text-transform: uppercase; letter-spacing: 0.05em; }
+    .essay-divider { border: none; border-top: 1px solid var(--color-border); margin: var(--space-16) 0; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">Theo Torku</a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="journey.html" class="nav-link">Journey</a></li>
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="writing.html" class="nav-link active">Writing</a></li>
+        <li><a href="engage.html" class="nav-link">Engage</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Essays & Ideas</p>
+          <h1 class="section-title" style="font-size: var(--text-4xl);">Writing</h1>
+          <p class="section-description" style="max-width: 700px;">
+            Long-form thinking on building AI products — multi-agent systems, governance,
+            product restraint, and the unglamorous distance between "built" and "shipped."
+            These aren't hot takes. They're lessons I've paid for.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Essay 1: Governance is the Moat -->
+    <section class="section" id="governance-moat">
+      <div class="container essay-full">
+        <p class="essay-meta">AI Systems · 8 min read</p>
+        <h2>Governance Is the Moat</h2>
+
+        <p>Anyone can demo an AI agent. You wire a model to a few tools, give it a goal, and watch it do something impressive on stage. The demo is free. What's scarce — and what enterprise buyers actually pay for — is the ability to answer one question afterward: <em>what exactly did it do, and why?</em></p>
+
+        <p>This is the gap between a demo and a product. A demo only has to work once, while you're watching. A production system runs unattended, on a schedule, reacting to events you didn't anticipate — and when it does something wrong, "the AI decided to" is not an acceptable answer to a customer, a regulator, or a board.</p>
+
+        <h3>Separate Reasoning From Execution</h3>
+
+        <p>The single most important architectural decision I make in agent systems is to separate the part that <em>thinks</em> from the part that <em>acts</em>. The model plans. Dedicated, controlled paths execute. The model never touches the database or the network directly.</p>
+
+        <p>This sounds like bureaucracy. It's the opposite — it's what makes autonomy safe enough to ship. When reasoning and execution are fused, every action is an unaudited side effect of a probabilistic system. When they're separated, every action passes through a path you can log, cost-cap, rate-limit, and replay.</p>
+
+        <h3>Auditability Is a Feature You Sell</h3>
+
+        <p>An immutable audit trail — token counts, cost, duration, and the decision behind every action — isn't compliance overhead. It's the product. It's what lets a non-technical operator trust a system acting on their behalf. It's the difference between "our AI handles your intake" and "our AI handles your intake, and here's the record of every call it made."</p>
+
+        <blockquote>
+          The agents that win in production aren't the most capable. They're the most accountable.
+        </blockquote>
+
+        <p>Competitors will match your model. They'll match your features. What's hard to copy is a system designed from the first commit so that autonomy and accountability are the same thing. Build the audit trail before you need it, because by the time you need it, it's too late to add.</p>
+      </div>
+    </section>
+
+    <hr class="essay-divider">
+
+    <!-- Essay 2: Feature-Complete is Not Done -->
+    <section class="section" id="feature-complete">
+      <div class="container essay-full">
+        <p class="essay-meta">Operating · 6 min read</p>
+        <h2>Feature-Complete Is Not Done</h2>
+
+        <p>There's a particular trap that catches good engineers building their own products. You ship feature after feature. You add tests. You harden the billing. One day the backlog is empty and the product is, by any reasonable definition, <em>complete</em>. And it has zero users.</p>
+
+        <p>I know this trap because I've lived in it. I've had products sit feature-complete for weeks — hardened, tested, billing live — while I found one more thing to polish instead of putting them in front of a single human.</p>
+
+        <h3>Why Building Feels Safer Than Shipping</h3>
+
+        <p>Building is comfortable. It's measurable, it's under your control, and it never rejects you. A commit always succeeds at being a commit. Launching is the opposite: uncomfortable, partly outside your control, and capable of telling you that the thing you spent months on isn't wanted.</p>
+
+        <p>So "polish what I've already built" always feels more responsible than "expose it to a customer." It isn't. Polishing an unlaunched product produces exactly zero learning about whether anyone wants it.</p>
+
+        <h3>Set the Launch Date Before the Feature List</h3>
+
+        <ul>
+          <li><strong>Date first.</strong> Decide when it goes in front of users, then decide what's in it. The deadline disciplines scope; an open-ended feature list expands to fill all available avoidance.</li>
+          <li><strong>One product at a time.</strong> Advancing five things toward an asymptote is slower than pushing one across the line. Pick one. Ship it. Then the next.</li>
+          <li><strong>Name the gap.</strong> "Feature-complete, pre-launch" is an honest status. "Done" is not. The words you use shape what you do next.</li>
+        </ul>
+
+        <blockquote>
+          Built is not the same as adopted. The distance between them is the actual job — and it's the part that feels least like work.
+        </blockquote>
+
+        <p>The customer teaches you things no test can: which feature they ignore, which sentence on the landing page they don't believe, which step in onboarding they abandon. You only get that curriculum by shipping and risking being wrong in public.</p>
+      </div>
+    </section>
+
+    <hr class="essay-divider">
+
+    <!-- Essay 3: Build a Number, Not a Dashboard -->
+    <section class="section" id="number-not-dashboard">
+      <div class="container essay-full">
+        <p class="essay-meta">Product · 7 min read</p>
+        <h2>Build a Number, Not a Dashboard</h2>
+
+        <p>When you have data and an audience that's drowning in it, the instinct is to build a dashboard: expose the metrics, add some charts, let users explore. This is almost always the wrong move for the person you're actually serving.</p>
+
+        <p>The SMB operator, the busy professional, the non-analyst buyer — they don't want more data. They have plenty. What they lack is a <em>decision</em>. Your job isn't to give them better visibility into the problem. It's to compress the problem into something they can act on.</p>
+
+        <h3>Decision Compression</h3>
+
+        <p>One input, one output. A store address in, the best staffing window out. A website in, a single 0–100 score out — with a clear path to improve it. The work is in the compression: doing the analysis so thoroughly that what's left is a number a human can trust and act on without interpreting.</p>
+
+        <p>A dashboard pushes the analytical labor back onto the user. A score absorbs it. That's the value you're actually selling — not the data, the conclusion.</p>
+
+        <h3>Which Means the Number Has to Be Trustworthy</h3>
+
+        <p>The moment you sell a single score, it has to mean the same thing every time. This is where AI products get dangerous: a metric that drifts because the model behind it drifted is worse than no metric. People build decisions on it, and the ground moves under them.</p>
+
+        <p>So even when an LLM does the messy extraction, the <em>scoring</em> should be deterministic and version-frozen. Same input, same number, today and next month. Pin the version, benchmark it, and don't change it without a formal review.</p>
+
+        <blockquote>
+          The product is the decision, not the data. A frozen, explainable number people can act on beats a richer view they have to decode.
+        </blockquote>
+
+        <p>Restraint is the hard part. Every instinct — and every stakeholder — will push for more dimensions, more configurability, more chart types. Resist. The discipline to ship one trustworthy number is rarer, and more valuable, than the ability to ship a hundred.</p>
+      </div>
+    </section>
+
+    <hr class="essay-divider">
+
+    <!-- Essay 4: Agents Should Do Less -->
+    <section class="section" id="agents-do-less">
+      <div class="container essay-full">
+        <p class="essay-meta">AI Systems · 7 min read</p>
+        <h2>Agents Should Do Less</h2>
+
+        <p>Most AI agents fail in production for the same reason they dazzle in demos: they try to do everything. One powerful agent that handles inquiries, books appointments, answers policy questions, and escalates issues looks magical in a controlled setting. Under real load, it's fragile, untestable, and impossible to debug.</p>
+
+        <p>The fix isn't a smarter agent. It's smaller ones.</p>
+
+        <h3>Decompose by Responsibility, Not by Model</h3>
+
+        <p>The durable unit of an agent system isn't a bigger model — it's an orchestration layer where each agent owns exactly one responsibility. A lead-generation agent. A qualification agent. A booking agent. Each with a clear input/output contract, each improvable and testable in isolation.</p>
+
+        <p>You pay for this in orchestration code, and you lose the "one agent does everything" demo moment. In exchange, you get a system where you can reason about each part, swap one without breaking the others, and actually find the bug when something goes wrong.</p>
+
+        <h3>Make the Workflow Durable</h3>
+
+        <p>Scoped agents are only half of it. The other half is running them as steps in a recoverable workflow — one that survives a crash mid-task, retries safely, and enforces a budget across the whole run. An agent that can't recover from failure isn't autonomous; it's a script that hasn't broken yet.</p>
+
+        <ul>
+          <li><strong>Clear boundaries</strong> beat broad capability. An agent that does one thing well is worth more than one that does five things unpredictably.</li>
+          <li><strong>Structured prompting with verified outputs</strong> usually clears the bar. Reach for fine-tuning only when the marginal quality justifies the training infrastructure — it rarely does at first.</li>
+          <li><strong>Predictability is the enterprise feature.</strong> Buyers don't want magic. They want a system whose behavior they can anticipate and audit.</li>
+        </ul>
+
+        <blockquote>
+          The agents that work in production are the ones that do less, not more. Composability beats capability.
+        </blockquote>
+
+        <p>Think in systems, not demos. The impressive monolith is a liability you'll spend a year untangling. The boring, decomposed architecture is the one that's still running when you have customers depending on it.</p>
+      </div>
+    </section>
+
+    <hr class="essay-divider">
+
+    <!-- Essay 5: Standardize the Default, Not the Dogma -->
+    <section class="section" id="standardize-default">
+      <div class="container essay-full">
+        <p class="essay-meta">Engineering · 6 min read</p>
+        <h2>Standardize the Default, Not the Dogma</h2>
+
+        <p>Run a portfolio of products long enough and entropy sets in. This one uses one model provider, that one another, a third is pinned to a version that's about to be retired. Each was a reasonable local decision. Together they're a liability — because the day the platform changes something, every product becomes its own separate migration and its own separate surprise.</p>
+
+        <p>The reflex is to mandate uniformity: one provider, one version, no exceptions. That's also a mistake. Sometimes another tool genuinely is the right one for a specific job, and a rule that forbids it just trades drift for dogma.</p>
+
+        <h3>A Default With Named Exceptions</h3>
+
+        <p>The position that actually holds: pick a default and apply it everywhere by convention — then allow deliberate, documented exceptions where a real best-tool case exists.</p>
+
+        <p>Across my portfolio that means Anthropic-native by default, with a short, explicit list of places I've chosen otherwise — like using another provider's structured-output extraction in one product where it was the right call at build time. The exception is fine. What would not be fine is the exception being a <em>surprise</em>.</p>
+
+        <h3>Why the Default Pays Off</h3>
+
+        <ul>
+          <li><strong>Upgrades become portfolio-wide wins.</strong> When a new capability ships — longer context, structured outputs, a better model tier — a consistent default means you adopt it once, broadly, instead of project by project.</li>
+          <li><strong>Deadlines stop being scrambles.</strong> A model retirement is a single audit-and-upgrade pass, not twenty independent fire drills.</li>
+          <li><strong>Exceptions stay honest.</strong> A documented list of deviations is something you can review and revisit. Silent drift is something you discover when it breaks.</li>
+        </ul>
+
+        <blockquote>
+          Standardize the default, not the dogma. A clear convention with a few named exceptions beats both rigid uniformity and accidental sprawl.
+        </blockquote>
+
+        <p>The exceptions are only safe <em>because</em> they're explicit. The goal was never purity. It was knowing, at any moment, exactly where you've stepped off the path and why.</p>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="section" style="background-color: var(--color-bg-subtle);">
+      <div class="container text-center">
+        <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">
+          Occasional Updates
+        </h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-8); max-width: 500px; margin-left: auto; margin-right: auto;">
+          I write infrequently but try to make it count. No schedule, no filler — just
+          ideas worth sharing when I have them.
+        </p>
+        <a href="mailto:theo@proplansolutions.io?subject=Subscribe" class="btn btn-primary btn-arrow">
+          Get Notified
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-text">© 2026 Theo Torku. Built with intention.</p>
+      <ul class="footer-links">
+        <li><a href="mailto:theo@proplansolutions.io" class="footer-link">Email</a></li>
+        <li><a href="https://linkedin.com/company/proplansolutions" class="footer-link">LinkedIn</a></li>
+        <li><a href="https://github.com/theotorku" class="footer-link">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

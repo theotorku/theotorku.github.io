@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page not found">
+
+  <title>404 — Theo Torku</title>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .error-container {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-8);
+    }
+    .error-code {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-4);
+    }
+    .error-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+    }
+    .error-description {
+      color: var(--color-text-secondary);
+      max-width: 400px;
+      margin: 0 auto var(--space-8);
+      line-height: 1.6;
+    }
+    .error-links {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">Theo Torku</a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="/pages/journey.html" class="nav-link">Journey</a></li>
+        <li><a href="/pages/work.html" class="nav-link">Work</a></li>
+        <li><a href="/pages/writing.html" class="nav-link">Writing</a></li>
+        <li><a href="/pages/engage.html" class="nav-link">Engage</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="error-container">
+      <div>
+        <p class="error-code">404</p>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-description">
+          The page you're looking for doesn't exist or has been moved.
+          Let me help you find what you need.
+        </p>
+        <div class="error-links">
+          <a href="/" class="btn btn-primary">Go Home</a>
+          <a href="/pages/work.html" class="btn">View Work</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-text">© 2026 Theo Torku. Built with intention.</p>
+      <ul class="footer-links">
+        <li><a href="mailto:theo@proplansolutions.io" class="footer-link">Email</a></li>
+        <li><a href="https://linkedin.com/company/proplansolutions" class="footer-link">LinkedIn</a></li>
+        <li><a href="https://github.com/theotorku" class="footer-link">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

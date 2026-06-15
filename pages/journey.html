@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Decision log — A reverse-chronological record of real decisions building ProPlan Solutions, their context, and what I learned from each.">
+  <meta property="og:title" content="Journey — Theo Torku">
+  <meta property="og:description" content="A reverse-chronological record of real decisions building an Anthropic-native AI portfolio — context, constraints, choices, and lessons.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../favicon.svg">
+
+  <title>Journey — Theo Torku</title>
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">Theo Torku</a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="journey.html" class="nav-link active">Journey</a></li>
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="writing.html" class="nav-link">Writing</a></li>
+        <li><a href="engage.html" class="nav-link">Engage</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Decision Log</p>
+          <h1 class="section-title" style="font-size: var(--text-4xl);">Journey</h1>
+          <p class="section-description" style="max-width: 700px;">
+            A reverse-chronological record of real decisions building ProPlan Solutions.
+            Not a resume — a window into how I think. Each entry captures the context,
+            constraints, the choice made, and what I learned. The honest ones — reversed
+            calls, things built but not yet shipped — are signal, not noise.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Decision Pattern Summary -->
+    <section class="section-sm" style="background-color: var(--color-bg-subtle);">
+      <div class="container content-narrow">
+        <p class="section-label" style="margin-bottom: var(--space-6);">The Pattern</p>
+        <p style="font-size: var(--text-lg); color: var(--color-text-secondary); line-height: 1.7;">
+          Across a portfolio of AI products, a consistent decision pattern emerges:
+        </p>
+        <ul style="margin-top: var(--space-6); font-size: var(--text-base); color: var(--color-text-secondary); list-style: none;">
+          <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border);">
+            <strong style="color: var(--color-text-primary);">The smallest thing that feels magical</strong> over building the whole vision
+          </li>
+          <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border);">
+            <strong style="color: var(--color-text-primary);">Governance and auditability</strong> as a moat — reasoning separated from execution
+          </li>
+          <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border);">
+            <strong style="color: var(--color-text-primary);">Composable, deployable stacks</strong> (Python/FastAPI, React/Next.js, Supabase, Claude) over locked-in platforms
+          </li>
+          <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border);">
+            <strong style="color: var(--color-text-primary);">Vertical focus</strong> over horizontal platforms — depth where generic tools fail
+          </li>
+          <li style="padding: var(--space-3) 0;">
+            <strong style="color: var(--color-text-primary);">Ship to learn</strong> — built is not the same as adopted, and I track the difference
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Decision Log Entries -->
+    <section class="section-sm">
+      <div class="container content-narrow">
+        <div class="journey-list">
+
+          <!-- Entry 1: A metric where none existed -->
+          <article class="journey-entry observe-animation">
+            <div class="journey-date">
+              <time datetime="2026-06">Jun 2026</time>
+            </div>
+            <div class="journey-content">
+              <h3>Built a Metric Where None Existed</h3>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Context</p>
+                <p>
+                  Buyers are starting to ask AI assistants for recommendations, but businesses
+                  have no way to know whether AI systems can even understand or surface them.
+                  SEO measures visibility to search engines; nothing measured visibility to
+                  agents. I had a working crawler-plus-extraction pipeline and had to decide
+                  what to make of it.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Constraints</p>
+                <p>
+                  A score is only useful if it's trustworthy and repeatable. An LLM in the
+                  loop makes that hard — same input, different output erodes confidence fast.
+                  And the buyer is a business owner, not an analyst: they want an answer, not
+                  a dashboard to interpret.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Decision</p>
+                <p>
+                  Build AIVE around a single deterministic <strong>Agent Business Index</strong> —
+                  a 0–100 score across five dimensions — and version-freeze the scoring model
+                  (v0.1.1) against a benchmark of 54 profiles. The extraction can use an LLM;
+                  the scoring cannot. Ship it as a productized audit with a fix roadmap, not a
+                  self-serve analytics tool.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Outcome</p>
+                <p>
+                  Shipped as a tiered offer with a full sales kit — the freshest, most
+                  sales-ready asset in the portfolio. The open work is conversion: turning the
+                  audit into the first paid pilots before it idles.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Insight</p>
+                <p>
+                  The product is the decision, not the data. A frozen, explainable number that
+                  someone can act on beats a richer dashboard they have to decode. Determinism
+                  is a feature you sell.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Entry 2: Shipping over building -->
+          <article class="journey-entry observe-animation">
+            <div class="journey-date">
+              <time datetime="2026-06">2026, ongoing</time>
+            </div>
+            <div class="journey-content">
+              <h3>Chose Shipping Over Building</h3>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Context</p>
+                <p>
+                  Several products reached "feature-complete" — ScopeAI hardened with 25 tests,
+                  a creative engine with billing live — and then sat. The portfolio was
+                  accumulating quality without accumulating customers. A pattern I could name:
+                  <em>feature-complete, no users.</em>
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Constraints</p>
+                <p>
+                  Building is comfortable and measurable; launching is uncomfortable and
+                  exposes you to rejection. One operator across many bets means attention is
+                  the scarce resource, and "polish the thing I've already built" always feels
+                  safer than "put it in front of someone."
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Decision</p>
+                <p>
+                  Treat the gap between done and deployed as the real work. Set launch dates
+                  before feature lists. Pick one product at a time and push it to first paying
+                  users rather than advancing five toward an asymptote.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Outcome</p>
+                <p>
+                  Marie AI is live with an instrumented funnel; AIVE shipped as a real offer.
+                  Others (RevOS, ScopeAI) are explicitly flagged as pre-launch and queued for a
+                  revive-or-pause call rather than left to quietly rot.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Insight</p>
+                <p>
+                  "Feature-complete" is a seductive stopping point that produces zero learning.
+                  Customers teach you what tests can't — and the only way to get that lesson is
+                  to ship and risk being wrong in public.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Entry 3: Reversed my own architecture -->
+          <article class="journey-entry observe-animation">
+            <div class="journey-date">
+              <time datetime="2026-04">Apr 2026</time>
+            </div>
+            <div class="journey-content">
+              <h3>Reversed My Own Architecture for the User</h3>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Context</p>
+                <p>
+                  For Marie AI's authentication and integrations, I had moved to a
+                  webhook-based pipeline — cleaner separation, fewer direct dependencies. On
+                  paper it was the better architecture. In the hands of a non-technical beauty
+                  professional, it added friction at exactly the wrong moment: onboarding.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Constraints</p>
+                <p>
+                  The user runs a business from a phone and has no patience for setup. Every
+                  extra step in the connect-your-accounts flow is a user lost. Architectural
+                  elegance is invisible to them; friction is not.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Decision</p>
+                <p>
+                  Reverse the call. Restore Google OAuth, remove the webhook integration. Take
+                  the slightly messier architecture in exchange for a one-tap connection the
+                  user actually completes.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Outcome</p>
+                <p>
+                  A smoother onboarding path for the people the product is for, plus a WCAG AA
+                  accessibility pass in the same stretch. The "worse" architecture was the
+                  right product decision.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Insight</p>
+                <p>
+                  Architectural purity is a means, never the goal. When the cleaner design
+                  costs the user a step, the user wins. Being willing to reverse your own
+                  decision is a feature, not a failure.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Entry 4: Governance-first runtime -->
+          <article class="journey-entry observe-animation">
+            <div class="journey-date">
+              <time datetime="2026-01">2025–2026</time>
+            </div>
+            <div class="journey-content">
+              <h3>Made the Runtime Autonomous — and Auditable</h3>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Context</p>
+                <p>
+                  To run agents unattended — on schedules, reacting to events, surviving
+                  crashes — I needed a real runtime, not a prompt loop. The temptation was to
+                  let the model call tools and execute directly: fastest path to a working demo.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Constraints</p>
+                <p>
+                  Autonomy without accountability is a liability. If a non-technical operator
+                  is going to trust agents acting on their own, every action has to be bounded,
+                  cost-controlled, and reconstructable after the fact. Demos don't have to
+                  answer "what exactly did it do, and why?" — production does.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Decision</p>
+                <p>
+                  Build ProplanOS with reasoning separated from execution: Claude plans, but
+                  actions run through controlled paths. Add a durable, DB-backed job queue
+                  (<code>SKIP LOCKED</code>), cron and event triggers, mission replay, an
+                  immutable audit log, and an SSRF guard. Governance as the foundation, not a
+                  later add-on.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Outcome</p>
+                <p>
+                  A deployed, autonomous runtime the rest of the portfolio builds on. The same
+                  thesis — auditable, policy-bound agents — became the differentiator for the
+                  enterprise-facing products (RevOS, DecisionOS).
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Insight</p>
+                <p>
+                  In AI products, governance is the moat. Anyone can demo an agent; far fewer
+                  can hand a buyer an audit trail. Separating reasoning from execution is what
+                  makes autonomy defensible.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Entry 5: Standardize on one provider -->
+          <article class="journey-entry observe-animation">
+            <div class="journey-date">
+              <time datetime="2026-04">Apr 2026</time>
+            </div>
+            <div class="journey-content">
+              <h3>Standardized on One Model Provider — With Exceptions</h3>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Context</p>
+                <p>
+                  A portfolio of ~20 products had drifted across model providers and versions.
+                  When the platform announced model retirements and a wave of new capabilities
+                  (structured outputs, longer context, an agent SDK), the cost of being
+                  scattered became concrete.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Constraints</p>
+                <p>
+                  Standardizing everything risks dogma — sometimes another tool genuinely is
+                  better for a specific job. But unmanaged drift means every product is its own
+                  migration, its own surprise when an API changes underneath it.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Decision</p>
+                <p>
+                  Make the portfolio Anthropic-native by default (Claude Sonnet 4.6), audit and
+                  upgrade every model string ahead of the retirement deadline, and allow
+                  deliberate, documented exceptions where a best-tool case holds — AIVE's
+                  OpenAI extraction being the explicit one.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Outcome</p>
+                <p>
+                  A consistent default that makes capability upgrades a portfolio-wide win
+                  instead of a per-project scramble — and a short, honest list of exceptions
+                  rather than silent drift.
+                </p>
+              </div>
+
+              <div class="journey-section">
+                <p class="journey-section-label">Insight</p>
+                <p>
+                  Standardize the default, not the dogma. A clear convention with a few
+                  named exceptions beats both rigid uniformity and accidental sprawl. The
+                  exceptions are only safe because they're explicit.
+                </p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background-color: var(--color-bg-subtle);">
+      <div class="container text-center">
+        <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">
+          Want the Full Context?
+        </h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-8); max-width: 500px; margin-left: auto; margin-right: auto;">
+          These entries are summaries. If you're evaluating fit, I'm happy to go deeper
+          on any of these decisions.
+        </p>
+        <a href="engage.html" class="btn btn-primary btn-arrow">Start a Conversation</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-text">© 2026 Theo Torku. Built with intention.</p>
+      <ul class="footer-links">
+        <li><a href="mailto:theo@proplansolutions.io" class="footer-link">Email</a></li>
+        <li><a href="https://linkedin.com/company/proplansolutions" class="footer-link">LinkedIn</a></li>
+        <li><a href="https://github.com/theotorku" class="footer-link">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Editor / OS
+.vscode/
+.DS_Store
+Thumbs.db
+*.lnk
+
+# Internal working notes (not for publication)
+Decision Logs and Case Studies.txt

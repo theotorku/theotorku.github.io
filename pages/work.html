@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Selected case studies — multi-agent AI systems, vertical SaaS, and production infrastructure built at ProPlan Solutions. Problem framing, architecture, tradeoffs, and honest status.">
+  <meta property="og:title" content="Work — Theo Torku">
+  <meta property="og:description" content="Case studies in multi-agent AI orchestration, vertical SaaS, and production systems. Problem framing, architecture decisions, and honest status.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../favicon.svg">
+
+  <title>Work — Theo Torku</title>
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">Theo Torku</a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="journey.html" class="nav-link">Journey</a></li>
+        <li><a href="work.html" class="nav-link active">Work</a></li>
+        <li><a href="writing.html" class="nav-link">Writing</a></li>
+        <li><a href="engage.html" class="nav-link">Engage</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label">Case Studies</p>
+          <h1 class="section-title" style="font-size: var(--text-4xl);">Work</h1>
+          <p class="section-description" style="max-width: 700px;">
+            Selected projects from ProPlan Solutions — the Anthropic-native AI company I'm
+            building. Each case study focuses on the decision that mattered: how I framed
+            the problem, the architecture I chose, what I deliberately excluded, and where
+            it honestly stands today. Statuses are real. Pre-launch means pre-launch.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Study List -->
+    <section class="section-sm">
+      <div class="container">
+        <div class="work-list">
+
+          <!-- Case Study 1: ProplanOS -->
+          <a href="#case-study-1" class="work-item observe-animation">
+            <div class="work-item-content">
+              <h3 class="work-item-title">ProplanOS — Multi-Agent Runtime</h3>
+              <p class="work-item-description">
+                An Anthropic-native runtime that runs agents autonomously: cron and event
+                triggers, a durable job queue, live mission streaming, and an immutable
+                audit log. The platform the rest of the portfolio runs on.
+              </p>
+            </div>
+            <div class="work-item-meta">
+              <span class="work-item-status">
+                <span class="status-dot live"></span>
+                Deployed · Autonomous
+              </span>
+            </div>
+          </a>
+
+          <!-- Case Study 2: Marie AI -->
+          <a href="#case-study-2" class="work-item observe-animation">
+            <div class="work-item-content">
+              <h3 class="work-item-title">Marie AI — Beauty Operations Assistant</h3>
+              <p class="work-item-description">
+                A live AI assistant for beauty professionals: chat, lightweight CRM, a
+                proactive daily agent, Slack and calendar integration, and Stripe billing.
+                Shipped to production at jmarie.beauty.
+              </p>
+            </div>
+            <div class="work-item-meta">
+              <span class="work-item-status">
+                <span class="status-dot live"></span>
+                Live
+              </span>
+            </div>
+          </a>
+
+          <!-- Case Study 3: AIVE -->
+          <a href="#case-study-3" class="work-item observe-animation">
+            <div class="work-item-content">
+              <h3 class="work-item-title">AIVE — AI Visibility Audit</h3>
+              <p class="work-item-description">
+                Crawls a business's website and scores how well AI systems can understand,
+                retrieve, and recommend it — a deterministic 0–100 Agent Business Index.
+                One number, five dimensions, a fix roadmap.
+              </p>
+            </div>
+            <div class="work-item-meta">
+              <span class="work-item-status">
+                <span class="status-dot evolving"></span>
+                Shipped · Pilots
+              </span>
+            </div>
+          </a>
+
+          <!-- Case Study 4: ScopeAI -->
+          <a href="#case-study-4" class="work-item observe-animation">
+            <div class="work-item-content">
+              <h3 class="work-item-title">ScopeAI — Proposal & SOW Generator</h3>
+              <p class="work-item-description">
+                Upload a client brief, get a branded proposal in minutes — PDF, email
+                delivery, shareable links, and SOW conversion. Built for agencies that
+                lose billable hours to paperwork.
+              </p>
+            </div>
+            <div class="work-item-meta">
+              <span class="work-item-status">
+                <span class="status-dot evolving"></span>
+                Feature-complete · Pre-launch
+              </span>
+            </div>
+          </a>
+
+          <!-- Case Study 5: RevOS -->
+          <a href="#case-study-5" class="work-item observe-animation">
+            <div class="work-item-content">
+              <h3 class="work-item-title">RevOS — Revenue Operating System</h3>
+              <p class="work-item-description">
+                Multi-agent orchestration for sales teams: lead generation and qualification
+                agents on a durable workflow engine, with cost controls and a full audit
+                trail. Verified end-to-end against the live model API.
+              </p>
+            </div>
+            <div class="work-item-meta">
+              <span class="work-item-status">
+                <span class="status-dot evolving"></span>
+                Verified · Pre-launch
+              </span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Study 1: ProplanOS -->
+    <section class="section" id="case-study-1" style="background-color: var(--color-bg-subtle);">
+      <div class="container content-narrow">
+        <article class="case-study-content">
+          <header class="case-study-header" style="border: none; padding: 0; margin-bottom: var(--space-12);">
+            <div class="case-study-meta">
+              <span>AI Infrastructure</span>
+              <span>•</span>
+              <span>2025–2026</span>
+              <span>•</span>
+              <span class="work-item-status">
+                <span class="status-dot live"></span>
+                Deployed · Autonomous
+              </span>
+            </div>
+            <h2 class="case-study-title" style="font-size: var(--text-3xl);">
+              ProplanOS — Multi-Agent Runtime
+            </h2>
+            <p class="case-study-summary">
+              The Anthropic-native runtime everything else in the portfolio sits on. Agents
+              don't just respond to a prompt — they run on schedules, react to events, recover
+              from failure, and leave an audit trail. Built so that "the AI did something" is
+              never a mystery.
+            </p>
+          </header>
+
+          <div class="case-study-section">
+            <h3>Problem Framing</h3>
+            <p>
+              Most "AI agent" demos are a single request-response loop dressed up as autonomy.
+              The moment you need an agent to run unattended — on a schedule, triggered by a
+              webhook, surviving a crash mid-task — the demo falls apart. I needed a runtime,
+              not a prompt: something that could orchestrate many agents reliably, control cost,
+              and produce evidence of every decision it made.
+            </p>
+            <p>
+              The harder requirement was governance. If agents are going to act on their own,
+              a non-technical operator has to be able to trust them. That means reasoning has to
+              be separable from execution, and every action has to be replayable after the fact.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>System Architecture</h3>
+            <p>
+              <strong>Orchestration:</strong> Claude (Sonnet 4.6) as the planner, with execution
+              handled by dedicated services rather than the model itself.<br>
+              <strong>Triggers:</strong> A cron scheduler plus event-driven triggers, so missions
+              can start on a timer or in response to external events.<br>
+              <strong>Durability:</strong> A database-backed job queue using <code>SELECT … FOR
+              UPDATE SKIP LOCKED</code> for safe concurrent workers, with mission replay
+              persistence so any run can be reconstructed.<br>
+              <strong>Observability &amp; safety:</strong> Live mission streaming, an immutable
+              audit log (token counts, cost, duration per session), and an SSRF guard on outbound
+              fetches.<br>
+              <strong>Stack:</strong> Python 3.12 / FastAPI, Supabase (Postgres with views and
+              triggers), deployed across Vercel (frontend) and Railway (backend). 24 tests.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Key Tradeoffs</h3>
+            <p>
+              <strong>Accepted:</strong> Separating reasoning from execution is more moving parts
+              than letting the model "just call tools." That cost buys auditability and a hard
+              boundary on what an agent can actually do — worth it for anything running unattended.
+            </p>
+            <p>
+              <strong>Rejected:</strong> Letting agents execute code or hit the network directly.
+              Convenient in a demo, indefensible in production. Every action goes through a
+              controlled path that can be logged, cost-capped, and replayed.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Where It Stands</h3>
+            <p>
+              Deployed and autonomous — running on cron and event triggers with the durable queue
+              live. It's the substrate the product work (RevOS, the agent services) builds on,
+              which is the real test: infrastructure earns its keep by what it lets you ship next,
+              not by its own metrics.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>What I'd Do Differently</h3>
+            <p>
+              Commit to the Claude Agent SDK earlier instead of hand-rolling parts of the
+              execution and approval-gate layer. Some of what I built is now offered as a
+              standard primitive — a reminder that on a fast-moving platform, "build vs. adopt"
+              is a decision you have to keep re-making, not make once.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Case Study 2: Marie AI -->
+    <section class="section" id="case-study-2">
+      <div class="container content-narrow">
+        <article class="case-study-content">
+          <header class="case-study-header" style="border: none; padding: 0; margin-bottom: var(--space-12);">
+            <div class="case-study-meta">
+              <span>Vertical SaaS · Beauty</span>
+              <span>•</span>
+              <span>2025–2026</span>
+              <span>•</span>
+              <span class="work-item-status">
+                <span class="status-dot live"></span>
+                Live
+              </span>
+            </div>
+            <h2 class="case-study-title" style="font-size: var(--text-3xl);">
+              Marie AI — Beauty Operations Assistant
+            </h2>
+            <p class="case-study-summary">
+              An AI assistant for beauty professionals, shipped to production at jmarie.beauty.
+              Not a chatbot bolted onto a website — a daily operating companion: client context,
+              follow-ups, scheduling, and a proactive agent that does work before being asked.
+            </p>
+          </header>
+
+          <div class="case-study-section">
+            <h3>Problem Framing</h3>
+            <p>
+              Independent beauty professionals run a real business out of a phone: bookings,
+              client relationships, follow-ups, marketing. Generic CRMs are too heavy and
+              generic AI chat is too passive. The opportunity wasn't "add AI" — it was to make
+              the software do the chasing, so the operator could stay with clients.
+            </p>
+            <p>
+              The constraint that shaped everything: the user is non-technical and busy. If the
+              product needs a setup wizard or a manual, it's already lost.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>System Architecture</h3>
+            <p>
+              <strong>Frontend:</strong> React 19 + Vite.<br>
+              <strong>Backend:</strong> Node.js / Express.<br>
+              <strong>Data:</strong> Supabase (Postgres) with row-level security on every table.<br>
+              <strong>Intelligence:</strong> Claude API for chat, drafting, and the relationship
+              intelligence layer; a proactive daily agent on <code>node-cron</code> that surfaces
+              work each morning.<br>
+              <strong>Integrations:</strong> Stripe (live billing), Google OAuth (calendar/Gmail),
+              Slack, and ElevenLabs voice output.<br>
+              <strong>Quality:</strong> 24 tests, a WCAG AA accessibility pass, and a deployed
+              acquisition funnel (landing page + waitlist with a Slack ping on every signup).
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Key Tradeoffs</h3>
+            <p>
+              <strong>Accepted:</strong> I reversed an earlier auth decision — moved off a
+              webhook-based integration and restored Google OAuth — because the architecturally
+              cleaner option created friction for a non-technical user. UX won over purity, on
+              purpose.
+            </p>
+            <p>
+              <strong>Rejected:</strong> A heavyweight, configurable CRM. The whole bet is that
+              opinionated defaults beat flexibility for this user. Every settings screen avoided
+              is a user retained.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Where It Stands</h3>
+            <p>
+              Live in production with billing enabled and the acquisition funnel instrumented —
+              the one product in the portfolio with real users touching it daily. The current
+              focus is honest and unglamorous: driving and measuring signups, then a Next.js v2
+              rebuild for scale. Built is not the same as adopted, and I track the difference.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>What I'd Do Differently</h3>
+            <p>
+              Instrument the funnel from the first day the landing page went up, not after.
+              For a stretch the page was live but unmeasured — and an unmeasured funnel is just
+              a hope. Measurement is a day-one feature, not a later one.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Case Study 3: AIVE -->
+    <section class="section" id="case-study-3" style="background-color: var(--color-bg-subtle);">
+      <div class="container content-narrow">
+        <article class="case-study-content">
+          <header class="case-study-header" style="border: none; padding: 0; margin-bottom: var(--space-12);">
+            <div class="case-study-meta">
+              <span>AI Product</span>
+              <span>•</span>
+              <span>2026</span>
+              <span>•</span>
+              <span class="work-item-status">
+                <span class="status-dot evolving"></span>
+                Shipped · Pilots
+              </span>
+            </div>
+            <h2 class="case-study-title" style="font-size: var(--text-3xl);">
+              AIVE — AI Visibility Audit
+            </h2>
+            <p class="case-study-summary">
+              As buyers start asking AI assistants for recommendations, "are we visible to AI?"
+              becomes a real question with no answer. AIVE turns it into a number: a deterministic
+              0–100 Agent Business Index that scores how well AI systems can understand, retrieve,
+              and recommend a business.
+            </p>
+          </header>
+
+          <div class="case-study-section">
+            <h3>Problem Framing</h3>
+            <p>
+              SEO measured visibility to search engines. Nothing measured visibility to AI agents —
+              the systems increasingly mediating what customers find and choose. Business owners
+              feel the shift but have no instrument for it. The product insight: don't build
+              another analytics dashboard, build a single decision-grade score with a clear path
+              to improve it.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>System Architecture</h3>
+            <p>
+              <strong>Crawl:</strong> Playwright (headless Chromium) captures the live site.<br>
+              <strong>Extract:</strong> An LLM with structured outputs turns pages into a clean
+              semantic profile of the business.<br>
+              <strong>Score:</strong> A deterministic <strong>Agent Business Index</strong> across
+              five dimensions — AI Understanding, Retrieval, Recommendation, Agent Readiness, and
+              Semantic Authority — rolled into one 0–100 number.<br>
+              <strong>Deliver:</strong> A React + Chakra UI dashboard and report; FastAPI backend;
+              Supabase; deployed on Vercel + Railway.<br>
+              <strong>Discipline:</strong> The scoring model (ABI v0.1.1) is version-frozen against
+              a benchmark of 54 profiles — no changes without a formal review, so a score means the
+              same thing tomorrow as today.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Key Tradeoffs</h3>
+            <p>
+              <strong>Accepted:</strong> Determinism over cleverness. The score has to be stable
+              and explainable, so the scoring layer is deterministic even though the extraction
+              uses an LLM. A metric you can't trust to be consistent isn't a metric.
+            </p>
+            <p>
+              <strong>Accepted (and flagged):</strong> Extraction uses OpenAI structured outputs —
+              the only non-Anthropic component in the portfolio. It was the right tool at build
+              time; standardizing it onto Anthropic structured outputs is a deliberate open
+              decision, not an oversight.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Where It Stands</h3>
+            <p>
+              Shipped as a productized offer — a working audit plus a full sales kit, tiered as a
+              pilot audit, a standard audit, and an audit-plus-roadmap engagement. The freshest
+              and most sales-ready asset in the portfolio; the current job is converting it into
+              the first paid pilots before it goes stale.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Case Study 4: ScopeAI -->
+    <section class="section" id="case-study-4">
+      <div class="container content-narrow">
+        <article class="case-study-content">
+          <header class="case-study-header" style="border: none; padding: 0; margin-bottom: var(--space-12);">
+            <div class="case-study-meta">
+              <span>Agency SaaS</span>
+              <span>•</span>
+              <span>2026</span>
+              <span>•</span>
+              <span class="work-item-status">
+                <span class="status-dot evolving"></span>
+                Feature-complete · Pre-launch
+              </span>
+            </div>
+            <h2 class="case-study-title" style="font-size: var(--text-3xl);">
+              ScopeAI — Proposal &amp; SOW Generator
+            </h2>
+            <p class="case-study-summary">
+              Agencies lose billable hours turning a client brief into a polished proposal.
+              ScopeAI compresses that: brief in, branded proposal out in minutes — PDF, email
+              delivery, shareable links, and conversion into a statement of work.
+            </p>
+          </header>
+
+          <div class="case-study-section">
+            <h3>Problem Framing</h3>
+            <p>
+              Proposal writing is high-frequency, low-leverage work: every agency does it
+              constantly, and every one does it slightly differently. The win isn't a better
+              document editor — it's collapsing the time from "we should send something" to
+              "it's in their inbox," without the output looking generated.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>System Architecture</h3>
+            <p>
+              <strong>App:</strong> Next.js 16 + TypeScript.<br>
+              <strong>Pipeline:</strong> An AI pipeline (Claude Sonnet 4.6) that extracts from the
+              brief and generates a structured, branded proposal, with conversion into a SOW.<br>
+              <strong>Delivery:</strong> React-PDF export, Resend for email with tracking, and
+              tokenized shareable links.<br>
+              <strong>Data &amp; billing:</strong> Supabase (Postgres with row-level security),
+              org-scoped logo/asset storage, and Stripe metered billing.<br>
+              <strong>Quality:</strong> 25 tests, with a dedicated security and billing-correctness
+              hardening pass (server actions, AI input handling, share-link tokens).
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Key Tradeoffs</h3>
+            <p>
+              <strong>Accepted:</strong> I spent real time hardening billing metering and
+              share-link tokens before launch rather than after. For a product that handles
+              money and client documents, getting that wrong in front of users is far more
+              expensive than the delay.
+            </p>
+            <p>
+              <strong>Rejected:</strong> Shipping the moment it was feature-complete. Which is
+              also the honest risk below.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Where It Stands</h3>
+            <p>
+              Feature-complete and hardened — and still pre-launch. This is the most important
+              thing I can tell you about it: the gap between "done" and "in front of customers"
+              is the hardest distance in the portfolio, and I'd rather name it than dress it up.
+              The next move is a production deploy and beta outreach to the first agencies, full
+              stop.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>What I'd Do Differently</h3>
+            <p>
+              Set the launch date before the feature list. "Feature-complete" is a seductive
+              stopping point that feels like progress while producing zero learning. Customers
+              teach you things tests can't — and you only get that lesson by shipping.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Case Study 5: RevOS -->
+    <section class="section" id="case-study-5" style="background-color: var(--color-bg-subtle);">
+      <div class="container content-narrow">
+        <article class="case-study-content">
+          <header class="case-study-header" style="border: none; padding: 0; margin-bottom: var(--space-12);">
+            <div class="case-study-meta">
+              <span>Multi-Agent Orchestration</span>
+              <span>•</span>
+              <span>2026</span>
+              <span>•</span>
+              <span class="work-item-status">
+                <span class="status-dot evolving"></span>
+                Verified · Pre-launch
+              </span>
+            </div>
+            <h2 class="case-study-title" style="font-size: var(--text-3xl);">
+              RevOS — Revenue Operating System
+            </h2>
+            <p class="case-study-summary">
+              Multi-agent orchestration for sales teams: lead generation and qualification agents
+              running on a durable workflow engine, with cost controls and an audit trail. The
+              enterprise-shaped expression of the same governance thesis behind ProplanOS.
+            </p>
+          </header>
+
+          <div class="case-study-section">
+            <h3>Problem Framing</h3>
+            <p>
+              Sales automation is full of brittle, single-purpose bots. The thesis here is that
+              the durable unit isn't a bigger agent — it's an orchestration layer where scoped
+              agents (generation, qualification) run as steps in a recoverable workflow, with
+              budgets and a record of every decision. Enterprise buyers don't want magic; they
+              want predictability they can audit.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>System Architecture</h3>
+            <p>
+              <strong>Agents:</strong> A Lead Generation agent and a Qualification agent, each
+              scoped to one responsibility with clear input/output contracts.<br>
+              <strong>Orchestration:</strong> LangGraph for agent flow, Temporal.io for durable,
+              recoverable workflows.<br>
+              <strong>State &amp; control:</strong> PostgreSQL and Redis, with explicit cost
+              controls and a complete audit trail.<br>
+              <strong>Packaging:</strong> Docker, with a complete API and a scaffolded frontend.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Key Tradeoffs</h3>
+            <p>
+              <strong>Accepted:</strong> Decomposing by responsibility means more orchestration
+              code and less of a single "one agent does everything" demo moment. In exchange,
+              each agent can be tested, improved, and reasoned about in isolation.
+            </p>
+            <p>
+              <strong>Rejected:</strong> Fine-tuned models. Structured prompting with verified
+              outputs cleared the bar; training infrastructure wasn't justified by the marginal
+              quality it would add.
+            </p>
+          </div>
+
+          <div class="case-study-section">
+            <h3>Where It Stands</h3>
+            <p>
+              Both agents are verified end-to-end against the live model API and the backend is
+              complete; the frontend is scaffolded. It then went idle for weeks while live
+              products took priority — so the honest status is "verified, pre-launch, and overdue
+              for a revive-or-pause decision." Naming that is part of operating a portfolio:
+              not every bet gets pushed at once, and pretending otherwise is how things quietly rot.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Portfolio note -->
+    <section class="section-sm">
+      <div class="container content-narrow text-center">
+        <p style="color: var(--color-text-tertiary); font-size: var(--text-sm); line-height: 1.7;">
+          These five are a representative slice, not the whole portfolio — there's also work in
+          AI marketing/creative generation, podcast production, home-services intelligence, inbox
+          triage, and an agent control plane with a sandboxed execution layer. Depth over a dump:
+          ask and I'll go deep on whichever is relevant to you.
+        </p>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background-color: var(--color-bg-subtle);">
+      <div class="container text-center">
+        <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">
+          Want Technical Details?
+        </h2>
+        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-8); max-width: 500px; margin-left: auto; margin-right: auto;">
+          These are summaries. Happy to walk through architecture, code, and the real
+          decision history behind any of these systems.
+        </p>
+        <a href="engage.html" class="btn btn-primary btn-arrow">Let's Talk</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-text">© 2026 Theo Torku. Built with intention.</p>
+      <ul class="footer-links">
+        <li><a href="mailto:theo@proplansolutions.io" class="footer-link">Email</a></li>
+        <li><a href="https://linkedin.com/company/proplansolutions" class="footer-link">LinkedIn</a></li>
+        <li><a href="https://github.com/theotorku" class="footer-link">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

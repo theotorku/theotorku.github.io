@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Describe your problem and get a first-pass technical framing — how I'd decompose it, the questions I'd ask, and the architecture patterns that apply.">
+  <meta property="og:title" content="Problem Framing — Theo Torku">
+  <meta property="og:description" content="A working sample of how I think: describe a problem, get a first-pass technical decomposition.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../favicon.svg">
+  <title>Problem Framing — Theo Torku</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .framing-container { max-width: 800px; margin: 0 auto; }
+    .framing-intro { margin-bottom: var(--space-12); }
+    .framing-intro-title { font-family: var(--font-display); font-size: var(--text-3xl); margin-bottom: var(--space-4); }
+    .framing-intro-description { color: var(--color-text-secondary); line-height: 1.7; max-width: 600px; }
+    .input-section { margin-bottom: var(--space-8); }
+    .input-label { font-size: var(--text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-tertiary); margin-bottom: var(--space-3); display: block; }
+    .problem-textarea { width: 100%; min-height: 150px; padding: var(--space-4); font-family: var(--font-body); font-size: var(--text-base); line-height: 1.6; border: 2px solid var(--color-border); background-color: var(--color-bg-elevated); color: var(--color-text-primary); resize: vertical; transition: border-color var(--transition-fast); }
+    .problem-textarea:focus { outline: none; border-color: var(--color-text-primary); }
+    .problem-textarea::placeholder { color: var(--color-text-tertiary); }
+    .char-count { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: var(--space-2); text-align: right; }
+    .context-toggles { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+    .context-toggle { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text-secondary); cursor: pointer; transition: all var(--transition-fast); }
+    .context-toggle:hover { border-color: var(--color-text-secondary); }
+    .context-toggle.active { border-color: var(--color-text-primary); background: var(--color-bg-subtle); color: var(--color-text-primary); }
+    .submit-section { margin-top: var(--space-8); display: flex; align-items: center; gap: var(--space-4); }
+    .output-section { margin-top: var(--space-12); padding-top: var(--space-12); border-top: 1px solid var(--color-border); display: none; }
+    .output-section.visible { display: block; animation: fadeIn 0.4s ease forwards; }
+    .output-header { margin-bottom: var(--space-8); }
+    .output-label { font-size: var(--text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-tertiary); margin-bottom: var(--space-2); }
+    .output-title { font-family: var(--font-display); font-size: var(--text-2xl); }
+    .framing-block { margin-bottom: var(--space-8); padding: var(--space-6); background-color: var(--color-bg-subtle); border-left: 3px solid var(--color-text-tertiary); }
+    .framing-block-label { font-size: var(--text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-tertiary); margin-bottom: var(--space-3); }
+    .framing-block-content { color: var(--color-text-secondary); line-height: 1.7; }
+    .questions-grid { display: grid; gap: var(--space-4); margin-top: var(--space-4); }
+    .question-item { padding: var(--space-4); background: var(--color-bg-elevated); border: 1px solid var(--color-border); font-size: var(--text-sm); color: var(--color-text-secondary); }
+    .question-item strong { color: var(--color-text-primary); font-weight: 500; }
+    .architecture-sketch { margin-top: var(--space-6); padding: var(--space-6); background: var(--color-bg-elevated); border: 1px solid var(--color-border); font-family: monospace; font-size: 11px; line-height: 1.4; white-space: pre; overflow-x: auto; color: var(--color-text-secondary); }
+    .cta-block { margin-top: var(--space-12); padding: var(--space-8); background: var(--color-bg-subtle); text-align: center; }
+    .cta-block h3 { font-family: var(--font-display); font-size: var(--text-xl); margin-bottom: var(--space-4); }
+    .cta-block p { color: var(--color-text-secondary); margin-bottom: var(--space-6); max-width: 400px; margin-left: auto; margin-right: auto; }
+    .loading-state { display: flex; align-items: center; gap: var(--space-3); color: var(--color-text-secondary); }
+    .loading-dots { display: flex; gap: 4px; }
+    .loading-dots span { width: 6px; height: 6px; background: var(--color-text-tertiary); border-radius: 50%; animation: loadingDot 1.4s infinite; }
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes loadingDot { 0%, 80%, 100% { opacity: 0.3; } 40% { opacity: 1; } }
+    .disclaimer { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: var(--space-4); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .examples-section { margin-top: var(--space-8); }
+    .examples-toggle { font-size: var(--text-sm); color: var(--color-text-secondary); background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: var(--space-2); padding: 0; }
+    .examples-toggle:hover { color: var(--color-text-primary); }
+    .examples-list { display: none; margin-top: var(--space-4); }
+    .examples-list.visible { display: block; }
+    .example-item { padding: var(--space-3) var(--space-4); font-size: var(--text-sm); color: var(--color-text-secondary); cursor: pointer; border-left: 2px solid transparent; transition: all var(--transition-fast); }
+    .example-item:hover { background: var(--color-bg-subtle); border-left-color: var(--color-text-tertiary); }
+  </style>
+</head>
+<body>
+  <nav class="nav"><div class="container nav-inner"><a href="../index.html" class="nav-logo">Theo Torku</a><button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button><ul class="nav-links"><li><a href="journey.html" class="nav-link">Journey</a></li><li><a href="work.html" class="nav-link">Work</a></li><li><a href="writing.html" class="nav-link">Writing</a></li><li><a href="engage.html" class="nav-link">Engage</a></li></ul></div></nav>
+  <main>
+    <section class="section">
+      <div class="container framing-container">
+        <div class="framing-intro">
+          <h1 class="framing-intro-title">What I'd Build For You</h1>
+          <p class="framing-intro-description">Describe your problem in 2-3 sentences. I'll give you a first-pass technical framing: how I'd decompose it, what questions I'd ask, and what architecture patterns might apply.</p>
+        </div>
+        <div class="input-section">
+          <label class="input-label" for="problem-input">Your Problem</label>
+          <textarea id="problem-input" class="problem-textarea" placeholder="Example: We're a logistics company with 200 drivers. Dispatchers use spreadsheets to assign routes, taking 3 hours daily..." maxlength="1000"></textarea>
+          <p class="char-count"><span id="char-count">0</span>/1000</p>
+        </div>
+        <div class="input-section">
+          <label class="input-label">Context (optional)</label>
+          <div class="context-toggles">
+            <button class="context-toggle" data-context="early-stage">Early Stage</button>
+            <button class="context-toggle" data-context="scaling">Scaling</button>
+            <button class="context-toggle" data-context="ai-ml">AI/ML Focus</button>
+            <button class="context-toggle" data-context="b2b">B2B</button>
+          </div>
+        </div>
+        <div class="examples-section">
+          <button class="examples-toggle" id="examples-toggle">→ See example problems</button>
+          <div class="examples-list" id="examples-list">
+            <div class="example-item" data-example="logistics">Logistics: Manual route planning taking 3+ hours daily</div>
+            <div class="example-item" data-example="enterprise">B2B SaaS: First enterprise deal requires features we don't have</div>
+            <div class="example-item" data-example="ai">AI integration: Don't know where AI actually creates value</div>
+            <div class="example-item" data-example="legacy">Legacy system slowing us down, rewrite feels risky</div>
+            <div class="example-item" data-example="marketplace">Marketplace: Chicken-and-egg supply problem</div>
+          </div>
+        </div>
+        <div class="submit-section">
+          <button id="submit-btn" class="btn btn-primary btn-arrow">Generate Framing</button>
+          <div class="loading-state" id="loading" style="display: none;"><div class="loading-dots"><span></span><span></span><span></span></div><span>Analyzing...</span></div>
+        </div>
+        <p class="disclaimer">This demonstrates thinking patterns, not a proposal. Real solutions require real conversations.</p>
+        <div class="output-section" id="output-section">
+          <div class="output-header"><p class="output-label">First-Pass Framing</p><h2 class="output-title">Problem Decomposition</h2></div>
+          <div class="framing-block"><p class="framing-block-label">How I'm Hearing the Problem</p><div class="framing-block-content" id="problem-reframe"></div></div>
+          <div class="framing-block"><p class="framing-block-label">Questions I'd Ask First</p><div class="questions-grid" id="questions-list"></div></div>
+          <div class="framing-block"><p class="framing-block-label">Architecture Patterns</p><div class="framing-block-content" id="patterns-content"></div></div>
+          <div class="framing-block"><p class="framing-block-label">System Sketch</p><div class="architecture-sketch" id="architecture-sketch"></div></div>
+          <div class="framing-block"><p class="framing-block-label">What I'd Build First</p><div class="framing-block-content" id="first-build"></div></div>
+          <div class="framing-block"><p class="framing-block-label">Where This Could Go Wrong</p><div class="framing-block-content" id="risks-content"></div></div>
+          <div class="cta-block"><h3>Want to Go Deeper?</h3><p>This is a sketch. Real architecture requires real constraints and conversation.</p><a href="engage.html" class="btn btn-primary btn-arrow">Start a Conversation</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><p class="footer-text">© 2026 Theo Torku</p><ul class="footer-links"><li><a href="mailto:theo@proplansolutions.io" class="footer-link">Email</a></li><li><a href="https://linkedin.com/company/proplansolutions" class="footer-link">LinkedIn</a></li><li><a href="https://github.com/theotorku" class="footer-link">GitHub</a></li></ul></div></footer>
+  <script>
+(function(){
+const examples = {
+  logistics: "We're a logistics company with 200 drivers. Dispatchers use spreadsheets to assign routes, taking 3 hours daily and missing delivery windows.",
+  enterprise: "We have 40 SMB customers at $200/month. A Fortune 500 wants $150K/year but needs SSO, SOC 2, and 6 new features. Team of 4.",
+  ai: "Everyone says add AI but we don't know where it helps. We have humans reviewing contracts for clauses. Is this an AI or UX problem?",
+  legacy: "Core system is 6 years old. Every feature takes 3x longer than it should. Team wants to rewrite but we can't stop shipping.",
+  marketplace: "Two-sided marketplace connecting specialists with companies. Chicken-and-egg: no supply without demand. Competitor raised $50M, we have $500K."
+};
+
+const templates = {
+  optimization: {
+    reframe: "This is an optimization problem with human workflow constraints. The bottleneck isn't just technical—it's accumulated process debt solved with labor. The question: what decisions require human judgment vs. can be automated?",
+    questions: [
+      {cat:"Constraints", q:"What makes your constraints 'unique'? This reveals domain complexity generic tools miss."},
+      {cat:"Process", q:"Walk through a dispatcher's first 30 minutes. What info do they gather? What decisions come first?"},
+      {cat:"Failures", q:"When routes fail, what's the root cause? Driver issues? Traffic? Wrong constraints?"},
+      {cat:"Scale", q:"200 drivers today—what does 2 years look like? Does the problem grow linearly or exponentially?"}
+    ],
+    patterns: "This maps to <strong>constraint satisfaction + optimization</strong>. Three layers needed: (1) constraint engine encoding business rules, (2) optimization layer finding valid solutions, (3) human-in-the-loop for edge cases.",
+    sketch: `┌─────────────────────────────────────┐
+│          DISPATCH SYSTEM            │
+├─────────────────────────────────────┤
+│  INPUTS ──▶ CONSTRAINT ENGINE       │
+│  • Orders      • Driver certs       │
+│  • Drivers     • Vehicle caps       │
+│  • Vehicles    • Time windows       │
+│                     │               │
+│                     ▼               │
+│              OPTIMIZER              │
+│            (OR-Tools/LP)            │
+│                     │               │
+│         ┌───────────┴────────┐      │
+│         ▼                    ▼      │
+│    RESOLVED              CONFLICTS  │
+│   (Auto-dispatch)      (Human queue)│
+└─────────────────────────────────────┘`,
+    firstBuild: "Start with the <strong>constraint engine</strong>, not optimizer. Build a system that evaluates if a route is valid. Run it against yesterday's routes. How many violations? This validates the model before optimizing.",
+    risks: "Biggest risk: change management. Dispatchers with 10 years intuition will resist. Make them collaborators defining constraints. Second: your 'unique' constraints might be less unique than you think."
+  },
+  enterprise: {
+    reframe: "Classic enterprise readiness inflection. The question isn't 'can we build SSO'—it's 'does serving enterprise change who we are?' Enterprise features aren't just code; they're operational overhead and sales complexity.",
+    questions: [
+      {cat:"Signal", q:"How did this deal originate? Inbound suggests pull; if you hunted it, signal is weaker."},
+      {cat:"Features", q:"Of SSO, audit logs, SOC 2—which are true blockers vs nice-to-haves? Which would they defer?"},
+      {cat:"Economics", q:"What's the contract value? Does one enterprise = 10 SMBs or 100?"},
+      {cat:"Capacity", q:"Who owns enterprise success? Support, implementation, ongoing relationship?"}
+    ],
+    patterns: "This is a <strong>platform bifurcation</strong> decision. Three paths: (1) stay SMB, decline, (2) go all-in enterprise, (3) build tiered platform. Path 3 hardest but most valuable.",
+    sketch: `┌─────────────────────────────────────┐
+│      TIERED PLATFORM ARCHITECTURE   │
+├─────────────────────────────────────┤
+│  ENTERPRISE LAYER                   │
+│  • SSO (SAML/OIDC)  • Audit logs    │
+│  • Custom reports   • SLA monitoring│
+│              │                      │
+│              ▼                      │
+│  CORE PRODUCT (shared)              │
+│  • All current features             │
+│  • Multi-tenant architecture        │
+│              │                      │
+│      ┌───────┴───────┐              │
+│      ▼               ▼              │
+│   SMB TIER     ENTERPRISE TIER      │
+│   $200/mo         $12K+/yr          │
+└─────────────────────────────────────┘`,
+    firstBuild: "Start with <strong>audit logging</strong>—foundation for SOC 2 and trust, but improves your product for everyone. SSO is commoditized (use Auth0/WorkOS). Custom reporting is a trap—push back.",
+    risks: "Risk: becoming a consulting company for one client. If >30% engineering goes to enterprise-specific work, you've lost SMB PMF. SOC 2 takes longer than vendors claim."
+  },
+  ai: {
+    reframe: "'Should we add AI' is the wrong question. Ask: 'where do humans spend time on tasks AI could do adequately?' Contract review is strong—but value isn't 'AI reviews contracts,' it's 'humans review 10x more with AI pre-filtering.'",
+    questions: [
+      {cat:"Workflow", q:"How long per contract? What % are straightforward vs genuinely complex?"},
+      {cat:"Errors", q:"What happens when a clause is missed? Regulatory penalty? Lost revenue? Minor issue?"},
+      {cat:"Volume", q:"Contracts per week? AI ROI scales with volume—10/month vs 1000 is different math."},
+      {cat:"Data", q:"Do you have labeled historical data? Past contracts with 'correct' clause identification?"}
+    ],
+    patterns: "This is <strong>human-in-the-loop classification</strong>. LLM extracts candidates with confidence scores. High-confidence auto-proceeds, low-confidence queues for humans. Human decisions become training data.",
+    sketch: `┌─────────────────────────────────────┐
+│    HUMAN-IN-THE-LOOP DOCUMENT AI    │
+├─────────────────────────────────────┤
+│  DOCUMENT INTAKE                    │
+│         │                           │
+│         ▼                           │
+│  LLM EXTRACTION LAYER               │
+│  • Clause identification            │
+│  • Confidence scoring               │
+│         │                           │
+│    ┌────┴────┐                      │
+│    ▼         ▼                      │
+│ HIGH CONF  LOW CONF                 │
+│ (>90%)     (<90%)                   │
+│ Auto-pass  Human queue ──▶ Training │
+│    │              │         Data    │
+│    └──────┬───────┘                 │
+│           ▼                         │
+│    DOWNSTREAM SYSTEMS               │
+└─────────────────────────────────────┘`,
+    firstBuild: "Start with <strong>measurement</strong>. Instrument current workflow: time per contract, reviewer agreement rate. Then test extraction on 50 historical contracts. If accuracy <85%, it's a UX problem, not AI.",
+    risks: "Risk 1: Over-automation. Humans trust AI too much, miss edge cases. Build friction into auto-accept. Risk 2: LLM drift. Model updates change behavior. Need eval sets and monitoring."
+  },
+  legacy: {
+    reframe: "Every engineer wants to rewrite. Most fail. The 6-year system isn't the problem—it's a symptom. Why does every feature take 3x? Code? Architecture? Deployment? Tests? Different causes need different solutions.",
+    questions: [
+      {cat:"Bottleneck", q:"Where does 3x come from? Writing code? Testing? Deployment? Debugging production?"},
+      {cat:"Complexity", q:"What are the hairiest parts? Concentrated or distributed across the codebase?"},
+      {cat:"Risk", q:"Cost of production incident? Can you afford to break things while modernizing?"},
+      {cat:"Knowledge", q:"Who understands the system best? Are they bought into change or defending status quo?"}
+    ],
+    patterns: "This is <strong>strangler fig</strong>, not rewrite. Identify boundaries. Build new behind feature flags. Route traffic incrementally. Old system runs until new proves itself.",
+    sketch: `┌─────────────────────────────────────┐
+│       STRANGLER FIG MIGRATION       │
+├─────────────────────────────────────┤
+│  API GATEWAY (feature flags)        │
+│         │                           │
+│    ┌────┴────┐                      │
+│    ▼         ▼                      │
+│ LEGACY    NEW SERVICES              │
+│ SYSTEM                              │
+│ ┌──────┐   ┌──────┐                 │
+│ │Mod A │──▶│Svc A │ (migrated)      │
+│ └──────┘   └──────┘                 │
+│ ┌──────┐                            │
+│ │Mod B │   (next)                   │
+│ └──────┘                            │
+│ ┌──────┐                            │
+│ │Mod C │   (future)                 │
+│ └──────┘                            │
+│                                     │
+│ Timeline: Module by module, 3-6mo   │
+└─────────────────────────────────────┘`,
+    firstBuild: "Start with <strong>observability</strong>. Add logging, tracing, error tracking. Reveals where time goes, creates safety net, builds confidence. Then pick highest-pain, clearest-boundary module. Billing often good.",
+    risks: "Risk: strangler takes forever syncing systems. Mitigate with aggressive timelines. Risk 2: new becomes new legacy. Build discipline (tests, docs), not just code."
+  },
+  marketplace: {
+    reframe: "Chicken-and-egg is real but misdiagnosed. Question isn't 'how to get both sides'—it's 'which side has higher switching costs?' Start there. $500K vs $50M isn't fair on paid acquisition—need asymmetric strategy.",
+    questions: [
+      {cat:"Supply", q:"What makes a specialist 'good'? Can you identify and recruit top 10% manually?"},
+      {cat:"Demand", q:"Are there 100 companies making 80% of demand? Can you name them?"},
+      {cat:"Wedge", q:"Is there a niche where you could be default? Geographic, vertical, specialization?"},
+      {cat:"Advantage", q:"What do you have that $50M competitor doesn't? Relationships, insight, speed?"}
+    ],
+    patterns: "This is <strong>constrained supply, curated demand</strong>. Don't build open marketplace—build exclusive network. Recruit manually. Guarantee quality. Platform is curation and trust.",
+    sketch: `┌─────────────────────────────────────┐
+│    CURATED MARKETPLACE STRATEGY     │
+├─────────────────────────────────────┤
+│ PHASE 1: CONCIERGE (Mo 1-6)         │
+│  [YOU] manually match [YOU]         │
+│    │                   │            │
+│    ▼                   ▼            │
+│  50 TOP            20 KEY           │
+│  SPECIALISTS       COMPANIES        │
+│                                     │
+│ PHASE 2: ASSISTED (Mo 6-12)         │
+│  200 ──▶ MATCHING ◀── 100           │
+│  specs   ENGINE +     companies     │
+│          human override             │
+│                                     │
+│ PHASE 3: PLATFORM (Mo 12+)          │
+│  Only after match quality proven    │
+└─────────────────────────────────────┘`,
+    firstBuild: "Start with <strong>50 hand-picked specialists, 10 anchor companies</strong>. No platform. Spreadsheet, phone, white-glove. Prove 20 successful matches manually. The insight becomes your moat.",
+    risks: "Risk: build platform no one uses (skipped validation). Risk 2: stuck in concierge (set hard triggers for tech). Risk 3: anchor companies squeeze margins (diversify early)."
+  }
+};
+
+const input = document.getElementById('problem-input');
+const charEl = document.getElementById('char-count');
+const submitBtn = document.getElementById('submit-btn');
+const loading = document.getElementById('loading');
+const output = document.getElementById('output-section');
+const exToggle = document.getElementById('examples-toggle');
+const exList = document.getElementById('examples-list');
+
+input.addEventListener('input', () => charEl.textContent = input.value.length);
+
+document.querySelectorAll('.context-toggle').forEach(t => t.addEventListener('click', () => t.classList.toggle('active')));
+
+exToggle.addEventListener('click', () => { exToggle.classList.toggle('open'); exList.classList.toggle('visible'); });
+
+document.querySelectorAll('.example-item').forEach(i => i.addEventListener('click', () => {
+  input.value = examples[i.dataset.example];
+  charEl.textContent = input.value.length;
+  exList.classList.remove('visible');
+}));
+
+function detect(t) {
+  const l = t.toLowerCase();
+  if (l.includes('route') || l.includes('dispatch') || l.includes('schedule') || l.includes('spreadsheet')) return 'optimization';
+  if (l.includes('enterprise') || l.includes('fortune') || l.includes('sso') || l.includes('soc')) return 'enterprise';
+  if (l.includes('ai') || l.includes('automate') || l.includes('document') || l.includes('extract')) return 'ai';
+  if (l.includes('legacy') || l.includes('rewrite') || l.includes('old') || l.includes('debt') || l.includes('slow')) return 'legacy';
+  if (l.includes('marketplace') || l.includes('two-sided') || l.includes('chicken') || l.includes('supply')) return 'marketplace';
+  return null;
+}
+
+function render(tpl) {
+  document.getElementById('problem-reframe').innerHTML = `<p>${tpl.reframe}</p>`;
+  document.getElementById('questions-list').innerHTML = tpl.questions.map(q => `<div class="question-item"><strong>${q.cat}:</strong> ${q.q}</div>`).join('');
+  document.getElementById('patterns-content').innerHTML = `<p>${tpl.patterns}</p>`;
+  document.getElementById('architecture-sketch').textContent = tpl.sketch;
+  document.getElementById('first-build').innerHTML = `<p>${tpl.firstBuild}</p>`;
+  document.getElementById('risks-content').innerHTML = `<p>${tpl.risks}</p>`;
+  output.classList.add('visible');
+  output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+submitBtn.addEventListener('click', () => {
+  if (input.value.trim().length < 20) { alert('Please describe your problem in more detail.'); return; }
+  submitBtn.style.display = 'none';
+  loading.style.display = 'flex';
+  output.classList.remove('visible');
+  setTimeout(() => {
+    loading.style.display = 'none';
+    submitBtn.style.display = 'inline-flex';
+    const key = detect(input.value);
+    if (!key) { alert('I couldn\'t match a specific pattern to your problem. Try including more detail about the domain — logistics, enterprise sales, AI/ML, legacy systems, or marketplace dynamics.'); return; }
+    render(templates[key]);
+  }, 1200);
+});
+})();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
