@@ -174,79 +174,79 @@
 
       const scenarios = [
         {
-          type: "Architecture Decision",
-          title: "The Monolith vs. Microservices Question",
-          context: "You're building a vertical SaaS platform for a niche industry. The founding team is 3 engineers. You have 4 months of runway and need to reach MVP with paying customers. The CTO (your co-founder) is pushing for microservices 'to scale properly from day one.'",
-          constraints: ["4 months runway, need revenue before raise", "Team of 3 engineers (including you)", "Domain is complex with many edge cases", "No existing customers to learn from yet"],
+          type: "AI Systems Decision",
+          title: "Autonomy vs. Accountability",
+          context: "You're building a runtime so AI agents can run unattended — on schedules, reacting to events, recovering from crashes. A non-technical operator will rely on them to act on their behalf. The fastest path to an impressive demo is to hand the model some tools and let it execute actions directly.",
+          constraints: ["Agents will act with no human watching", "Buyer is non-technical and must trust the system", "A slick demo would impress people now", "Mistakes happen in production, not just on stage"],
           options: [
-            { letter: "A", title: "Microservices from Day One", description: "Build it right the first time. Separate services for auth, billing, core domain. Kubernetes deployment. Takes longer but won't need to rewrite." },
-            { letter: "B", title: "Modular Monolith", description: "Single deployable with clean internal boundaries. Can extract services later when you understand the domain. Ship in 6 weeks." },
-            { letter: "C", title: "Quick & Dirty Monolith", description: "Move fast, break things. Spaghetti is fine—you'll rewrite it all when you raise anyway. Ship in 3 weeks." },
-            { letter: "D", title: "Buy, Don't Build", description: "Use no-code tools and third-party services for everything. Minimal custom code. Focus on sales, not engineering." }
+            { letter: "A", title: "Let the Model Execute Directly", description: "Give the model tools and let it act. Fastest path to autonomy. Add guardrails later if you actually need them." },
+            { letter: "B", title: "Sandbox Only", description: "Let the model execute freely, but inside a locked-down sandbox. Containment without the audit trail." },
+            { letter: "C", title: "Separate Reasoning From Execution", description: "Model plans; controlled paths execute. Immutable audit log, cost caps, replay. More moving parts up front." },
+            { letter: "D", title: "Human in Every Loop", description: "No real autonomy. The agent drafts, a person approves every single action. Safe, but defeats the purpose." }
           ],
-          correctAnswer: "B",
-          reasoning: "Microservices are a scaling solution, not a starting solution. With 3 engineers and 4 months runway, operational complexity would kill us. But 'quick and dirty' creates tech debt that slows iteration right when you need to learn fastest. A modular monolith gives us speed AND the ability to extract services later when we actually understand our domain boundaries. The key insight: we don't know enough yet to draw service boundaries correctly.",
-          outcome: "Shipped MVP in 7 weeks. The 'modules' we thought would become separate services turned out to be wrong—the real boundaries emerged 3 months later. If we'd built microservices, we'd have spent months untangling the wrong abstractions."
+          correctAnswer: "C",
+          reasoning: "Autonomy without accountability is a liability. If an agent acts on its own, every action has to be bounded, cost-controlled, and reconstructable after the fact. Separating reasoning from execution looks like bureaucracy, but it's exactly what makes autonomy safe enough to ship — the model never touches the database or network directly; controlled paths do, and every one is logged. 'Add guardrails later' means never. By the time you need the audit trail, it's too late to build it.",
+          outcome: "Built ProplanOS this way: Claude plans, dedicated services execute, on a durable job queue with cron and event triggers, mission replay, and an immutable audit log. It became the substrate the rest of the portfolio runs on — and the same governance thesis became the differentiator for the enterprise-facing products."
         },
         {
           type: "Product Decision",
-          title: "The Enterprise Customer Dilemma",
-          context: "Your B2B product has 40 SMB customers paying $200/month. A Fortune 500 company wants to sign a $150K annual contract, but requires 6 features you haven't built, SOC 2 compliance, and a dedicated support SLA. Your burn rate is $50K/month.",
-          constraints: ["$50K/month burn, 5 months runway", "Team of 4 (you + 3 engineers)", "40 existing customers with their own feature requests", "SOC 2 takes 3-6 months minimum"],
+          title: "The Clean Architecture Users Hated",
+          context: "Your live product serves non-technical professionals who run a business from their phone. For auth and integrations you moved to a webhook-based pipeline — cleaner separation, fewer direct dependencies, genuinely the better architecture. But onboarding now has more steps, and that's exactly where users drop off.",
+          constraints: ["User is non-technical and impatient", "Onboarding is make-or-break for retention", "The webhook design really is the cleaner architecture", "You already built and shipped the webhook version"],
           options: [
-            { letter: "A", title: "All In on Enterprise", description: "Take the deal. Pause SMB roadmap. $150K buys runway. Build everything they need. This is the pivot point." },
-            { letter: "B", title: "Negotiate Scope Down", description: "Counter with 3 features, compliance timeline, reduced price. If they won't flex, walk away. Keep SMB focus." },
-            { letter: "C", title: "Decline Politely", description: "You're not ready for enterprise. The distraction will kill the company. Stay focused on SMB product-market fit." },
-            { letter: "D", title: "Parallel Paths", description: "Hire contractors for enterprise features. Keep core team on SMB. Try to serve both with separate resources." }
+            { letter: "A", title: "Keep It, Polish the UX", description: "The architecture is right. Add a setup wizard, better copy, and hand-holding to reduce the friction around it." },
+            { letter: "B", title: "Reverse It — Restore One-Tap OAuth", description: "Take the messier architecture for a connection users actually complete. Undo your own decision." },
+            { letter: "C", title: "Build Both Paths", description: "Offer OAuth for casual users and webhooks for power users. Maximum flexibility for everyone." },
+            { letter: "D", title: "Push Through", description: "Users will adapt. The long-term architecture matters more than short-term onboarding friction." }
           ],
           correctAnswer: "B",
-          reasoning: "One $150K customer with 6 custom features isn't enterprise success—it's consulting with equity. But walking away from $150K with 5 months runway is also reckless. The right move is to negotiate hard: which 2-3 features actually block the deal? What compliance can we phase? A real enterprise buyer will negotiate; someone using you for free development won't. The negotiation itself is signal.",
-          outcome: "They agreed to 3 features and phased SOC 2 (attestation in 6 months). Contract signed at $120K. More importantly, the features they insisted on turned out to be valuable for SMB customers too—it accelerated our roadmap rather than derailing it."
+          reasoning: "Architectural purity is a means, never the goal. The user can't see elegant separation of concerns — they only feel the extra step, and they leave. I'd already shipped the 'better' architecture and it was costing me the exact people the product is for. Building both paths just doubles the surface area to maintain for a problem I should simply delete. Being willing to reverse your own decision is a feature, not a failure.",
+          outcome: "Reversed it — restored Google OAuth, removed the webhook integration, and did a WCAG AA accessibility pass in the same stretch. Onboarding got smoother for the people Marie AI is actually built for. The 'worse' architecture was the right product call."
         },
         {
-          type: "Team Decision",
-          title: "The 10x Engineer Toxicity Problem",
-          context: "Your most productive engineer ships 3x more code than anyone else. They've built core infrastructure single-handedly. But they're dismissive in code reviews, have made two junior engineers cry, and the team dreads working with them. They don't think they're doing anything wrong.",
-          constraints: ["Critical launch in 6 weeks", "They own 40% of the codebase", "Two engineers have hinted they might leave", "No documentation on their systems"],
+          type: "Product Decision",
+          title: "A Number, or a Dashboard",
+          context: "You have a pipeline that crawls a business's website and analyzes how well AI systems can understand and recommend it. You can package the result as a rich analytics dashboard, or as a single score. The buyer is a busy business owner — not an analyst.",
+          constraints: ["Buyer is time-poor and wants an answer, not exploration", "An LLM is in the loop, so consistency is a real risk", "'More features' is the obvious way to justify a higher price", "The metric will drive real decisions, so it must be trustworthy"],
           options: [
-            { letter: "A", title: "Fire Immediately", description: "Culture is non-negotiable. Accept the short-term pain. The team will rally, and you'll figure out the code." },
-            { letter: "B", title: "Performance Plan", description: "Formal warning with specific behavioral requirements. 30 days to improve. Document everything for potential termination." },
-            { letter: "C", title: "Isolate and Insulate", description: "Move them to solo projects. Minimize team interaction. Keep the output, contain the damage." },
-            { letter: "D", title: "Defer Until After Launch", description: "Have a private conversation about concerns, but don't escalate until the critical work is done. Timing matters." }
+            { letter: "A", title: "One Deterministic Score + Roadmap", description: "A single 0–100 number across fixed dimensions, version-frozen, with a clear fix path. Compress the decision." },
+            { letter: "B", title: "Full Analytics Dashboard", description: "Expose every signal, add charts and filters, let users explore. More perceived value for the price." },
+            { letter: "C", title: "Score + Fresh AI Narrative Each Run", description: "A number plus a newly AI-written explanation every time. Feels personalized and dynamic." },
+            { letter: "D", title: "Tiered Metrics", description: "A headline score for casual users and the full dashboard for power users. Try to serve both at once." }
           ],
-          correctAnswer: "B",
-          reasoning: "Firing immediately is emotionally satisfying but operationally reckless—40% of the codebase with no docs, 6 weeks to launch. But 'defer until after launch' signals to the team that you tolerate toxicity when it's convenient. A formal performance plan does three things: (1) gives them a real chance to change, (2) shows the team you're taking action NOW, (3) creates documentation if they don't change. The key: the conversation must happen this week, not after launch.",
-          outcome: "They were genuinely surprised—no one had ever given them direct feedback. They improved significantly (not perfectly) over 60 days. Two years later, they're still on the team and have mentored three junior engineers. The intervention was the kindness they needed."
+          correctAnswer: "A",
+          reasoning: "The buyer doesn't want more data — they want a decision. The job is decision compression: do the analysis so thoroughly that what's left is a number they can act on. And the moment you sell a single score, it has to mean the same thing every time — so the scoring has to be deterministic and version-frozen even though an LLM does the messy extraction. A fresh AI-written narrative every run is exactly the drift that erodes trust. Restraint is the hard part; every instinct pushes toward more dimensions.",
+          outcome: "Shipped AIVE around a deterministic Agent Business Index — one 0–100 score across five fixed dimensions, with the scoring model (v0.1.1) frozen against a 54-profile benchmark. Packaged as a productized audit with a fix roadmap, not a self-serve tool. It became the most sales-ready asset in the portfolio."
         },
         {
-          type: "Technical Debt Decision",
-          title: "The Rewrite Temptation",
-          context: "The main codebase is 4 years old, written by founders who left. It works but is painful: no tests, inconsistent patterns, 15-minute deploy cycles. Every feature takes 3x longer than it should. The team is demoralized. A senior engineer proposes a 6-month rewrite in a modern stack.",
-          constraints: ["Current system serves 2,000 paying customers", "Team of 5 engineers, no one knows the old code deeply", "Competitors are shipping faster than you", "Board wants 2x growth this year"],
+          type: "Operating Decision",
+          title: "Feature-Complete, No Customers",
+          context: "One of your products is feature-complete — full AI pipeline, 25 tests, billing hardened, security reviewed. It's been done for weeks. It has zero users. There's always one more thing to polish, and shipping means exposing it to rejection.",
+          constraints: ["The product genuinely works and is well-tested", "You're one operator splitting attention across many products", "Building is comfortable and measurable; launching isn't", "Every week it sits, it learns nothing about demand"],
           options: [
-            { letter: "A", title: "Full Rewrite", description: "6 months of pain, then velocity forever. Freeze features, rebuild from scratch. Migrate customers at the end." },
-            { letter: "B", title: "Strangler Pattern", description: "Incrementally replace components. New features in new code, gradually migrate old features. Takes longer but lower risk." },
-            { letter: "C", title: "Invest in Testing Only", description: "Don't rewrite—add comprehensive tests to existing code. Improve deploy pipeline. Make the current codebase manageable." },
-            { letter: "D", title: "Hire Through It", description: "The code isn't the problem—velocity is. Hire 3 more engineers. More people, more features, outrun the debt." }
+            { letter: "A", title: "Polish, Then Launch", description: "A few more refinements and it'll be truly ready. Launch when it's right." },
+            { letter: "B", title: "Set a Launch Date, Ship to Beta", description: "Pick a date before adding any feature. Push it to the first real users this week, warts and all." },
+            { letter: "C", title: "Build Enterprise Features First", description: "It'll need SSO and audit logs eventually. Build them now so you only have to launch once." },
+            { letter: "D", title: "Move to the Next Product", description: "Momentum matters. Start something fresh and come back to launch this one later." }
           ],
           correctAnswer: "B",
-          reasoning: "Full rewrites almost always take 2x longer than estimated and deliver 0.5x the promised improvement. But 'just add tests' doesn't address the architectural problems causing the slowdown. Hiring more engineers into a bad codebase makes it worse, not better. The strangler pattern lets you prove the new architecture works on a contained piece before committing fully. You ship features WHILE improving. The psychological benefit matters too: the team sees progress weekly, not promised in 6 months.",
-          outcome: "Started with the billing system—highest pain, clearest boundaries. New service shipped in 8 weeks, reduced billing bugs by 90%. That success built credibility for the next migration. 18 months later, 70% of traffic runs on new services. We never had a 'big bang' migration, and we never stopped shipping features."
+          reasoning: "'Feature-complete' is a seductive stopping point that produces zero learning. Polishing an unlaunched product tells you nothing about whether anyone wants it — only customers do that. Building is comfortable because a commit always succeeds at being a commit; launching can tell you you're wrong, which is the entire point. Set the date before the feature list, ship one product at a time, and name the gap honestly: 'feature-complete, pre-launch' is a status; 'done' is a lie.",
+          outcome: "This is the call I now hold as correct — and the one I've had to enforce on myself. It worked where I applied it: Marie AI is live with an instrumented funnel, and AIVE shipped as a real offer. It's also still my cautionary tale — ScopeAI remains feature-complete and not yet pushed across the line. Naming that beats pretending."
         },
         {
           type: "Strategic Decision",
-          title: "The Acquisition Offer",
-          context: "A larger competitor offers to acquire your company for $12M. You've raised $3M, have 18 months runway, and are growing 15% month-over-month. The offer is 60% cash, 40% stock in the acquirer. Three of your five engineers would likely leave post-acquisition.",
-          constraints: ["18 months runway at current burn", "15% MoM growth (healthy but not explosive)", "Acquirer is 10x your size, public company", "Your equity: ~25% post-dilution"],
+          title: "One Provider, or the Best Tool Each Time?",
+          context: "Your portfolio of ~20 products has drifted across AI model providers and versions — each a reasonable local choice at the time. Now the platform announces model retirements and a wave of new capabilities. Suddenly being scattered has a cost: every product is its own separate migration.",
+          constraints: ["A retirement deadline is approaching; some products use soon-dead models", "Sometimes another provider genuinely is better for a specific job", "Unmanaged drift means surprises whenever an API changes", "You're one person maintaining all of it"],
           options: [
-            { letter: "A", title: "Accept the Offer", description: "$3M personal outcome, team gets liquidity, customers get stability. Bird in hand. 18 months is not forever." },
-            { letter: "B", title: "Negotiate Higher", description: "Counter at $20M. If they want you, they'll pay. If they walk, you weren't leaving much on the table." },
-            { letter: "C", title: "Decline and Raise", description: "The offer validates the business. Use it as leverage for a Series A at better terms. Swing for a bigger outcome." },
-            { letter: "D", title: "Decline and Bootstrap", description: "You have 18 months and growth. Get to profitability. Never raise again. Own your destiny." }
+            { letter: "A", title: "Mandate One Provider, No Exceptions", description: "Pick one, rip out everything else. Total uniformity. One simple rule to follow." },
+            { letter: "B", title: "Leave It — Best Tool Per Product", description: "Each product already chose well locally. Don't add bureaucracy; handle migrations as they come." },
+            { letter: "C", title: "Provider-Agnostic Abstraction", description: "Build an interface so any model is swappable. Solve the whole thing with architecture." },
+            { letter: "D", title: "One Default + Documented Exceptions", description: "Standardize the default everywhere by convention; allow deliberate, written-down exceptions where best-tool truly wins." }
           ],
-          correctAnswer: "C",
-          reasoning: "The offer is real signal, but $12M for a company growing 15% MoM is cheap—they see something. Taking it means $3M before taxes for 5 years of work; not life-changing money. But declining without a plan is ego, not strategy. The smart play: use the offer (and the diligence you've already done) to accelerate a fundraise. Investors love validated interest. The risk is real—18 months goes fast—but 15% MoM growth is strong enough to raise on.",
-          outcome: "Declined the offer, raised $8M Series A within 90 days at a $40M valuation. The acquisition interest was the best due diligence deck I never had to make. Two years later, the acquirer's stock dropped 60%—that 40% in their equity would've been worth far less than they promised."
+          correctAnswer: "D",
+          reasoning: "Mandating uniformity trades drift for dogma — sometimes another tool really is right for one job. But unmanaged drift means every product becomes its own surprise when the platform shifts. The position that holds is a default applied by convention, with a short, explicit list of exceptions. A provider-agnostic abstraction sounds clever but is a lot of infrastructure built to avoid making a decision, and it rarely pays off. The exceptions are only safe because they're documented — not because they're forbidden.",
+          outcome: "Made the portfolio Anthropic-native by default (Claude Sonnet 4.6), audited and upgraded every model string ahead of the retirement deadline, and kept a short list of deliberate exceptions — like AIVE's OpenAI extraction. Capability upgrades became a portfolio-wide win instead of twenty separate scrambles, and the exceptions stayed honest instead of becoming silent drift."
         }
       ];
 
