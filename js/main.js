@@ -218,4 +218,51 @@
     });
   });
 
+  // ==========================================================================
+  // Back-to-top button (injected; appears on long pages after scrolling)
+  // ==========================================================================
+
+  (function() {
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.innerHTML = '↑';
+    document.body.appendChild(btn);
+
+    btn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function toggle() {
+      btn.classList.toggle('visible', window.pageYOffset > 600);
+    }
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+  })();
+
+  // ==========================================================================
+  // Reading-progress bar (only on essay/long-form pages)
+  // ==========================================================================
+
+  (function() {
+    if (!document.querySelector('.essay-full')) return;
+
+    const bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = document.createElement('span');
+    bar.appendChild(fill);
+    document.body.appendChild(bar);
+
+    function update() {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      fill.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
 })();

@@ -25,7 +25,10 @@
     .problem-textarea { width: 100%; min-height: 150px; padding: var(--space-4); font-family: var(--font-body); font-size: var(--text-base); line-height: 1.6; border: 2px solid var(--color-border); background-color: var(--color-bg-elevated); color: var(--color-text-primary); resize: vertical; transition: border-color var(--transition-fast); }
     .problem-textarea:focus { outline: none; border-color: var(--color-text-primary); }
     .problem-textarea::placeholder { color: var(--color-text-tertiary); }
-    .char-count { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: var(--space-2); text-align: right; }
+    .char-count { font-size: var(--text-xs); color: var(--color-text-tertiary); margin: 0; }
+    .input-meta { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); margin-top: var(--space-2); }
+    .input-error { font-size: var(--text-xs); color: #EF4444; margin: 0; }
+    .input-error[hidden] { display: none; }
     .context-toggles { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
     .context-toggle { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text-secondary); cursor: pointer; transition: all var(--transition-fast); }
     .context-toggle:hover { border-color: var(--color-text-secondary); }
@@ -67,28 +70,32 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <nav class="nav"><div class="container nav-inner"><a href="../index.html" class="nav-logo">Theo Torku</a><button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button><ul class="nav-links"><li><a href="journey.html" class="nav-link">Journey</a></li><li><a href="work.html" class="nav-link">Work</a></li><li><a href="writing.html" class="nav-link">Writing</a></li><li><a href="engage.html" class="nav-link">Engage</a></li></ul></div></nav>
   <main id="main">
-    <section class="section">
+    <section class="section page-intro">
       <div class="container framing-container">
         <div class="framing-intro">
+          <p class="section-label">Interactive · Working Sample</p>
           <h1 class="framing-intro-title">What I'd Build For You</h1>
           <p class="framing-intro-description">Describe your problem in 2-3 sentences. I'll give you a first-pass technical framing: how I'd decompose it, what questions I'd ask, and what architecture patterns might apply.</p>
         </div>
         <div class="input-section">
           <label class="input-label" for="problem-input">Your Problem</label>
-          <textarea id="problem-input" class="problem-textarea" placeholder="Example: We're a logistics company with 200 drivers. Dispatchers use spreadsheets to assign routes, taking 3 hours daily..." maxlength="1000"></textarea>
-          <p class="char-count"><span id="char-count">0</span>/1000</p>
+          <textarea id="problem-input" class="problem-textarea" rows="5" spellcheck="false" autocomplete="off" aria-describedby="problem-error" placeholder="Example: We're a logistics company with 200 drivers. Dispatchers use spreadsheets to assign routes, taking 3 hours daily..." maxlength="1000"></textarea>
+          <div class="input-meta">
+            <p class="input-error" id="problem-error" role="alert" hidden>Add a bit more detail — at least 20 characters.</p>
+            <p class="char-count"><span id="char-count">0</span>/1000</p>
+          </div>
         </div>
         <div class="input-section">
           <label class="input-label">Context (optional)</label>
           <div class="context-toggles">
-            <button class="context-toggle" data-context="early-stage">Early Stage</button>
-            <button class="context-toggle" data-context="scaling">Scaling</button>
-            <button class="context-toggle" data-context="ai-ml">AI/ML Focus</button>
-            <button class="context-toggle" data-context="b2b">B2B</button>
+            <button type="button" class="context-toggle" data-context="early-stage" aria-pressed="false">Early Stage</button>
+            <button type="button" class="context-toggle" data-context="scaling" aria-pressed="false">Scaling</button>
+            <button type="button" class="context-toggle" data-context="ai-ml" aria-pressed="false">AI/ML Focus</button>
+            <button type="button" class="context-toggle" data-context="b2b" aria-pressed="false">B2B</button>
           </div>
         </div>
         <div class="examples-section">
-          <button class="examples-toggle" id="examples-toggle">→ See example problems</button>
+          <button type="button" class="examples-toggle" id="examples-toggle" aria-expanded="false" aria-controls="examples-list">→ See example problems</button>
           <div class="examples-list" id="examples-list">
             <div class="example-item" data-example="logistics">Logistics: Manual route planning taking 3+ hours daily</div>
             <div class="example-item" data-example="enterprise">B2B SaaS: First enterprise deal requires features we don't have</div>
@@ -98,7 +105,7 @@
           </div>
         </div>
         <div class="submit-section">
-          <button id="submit-btn" class="btn btn-primary btn-arrow">Generate Framing</button>
+          <button id="submit-btn" type="button" class="btn btn-primary btn-arrow" disabled>Generate Framing</button>
           <div class="loading-state" id="loading" style="display: none;"><div class="loading-dots"><span></span><span></span><span></span></div><span>Analyzing...</span></div>
         </div>
         <p class="disclaimer">This demonstrates thinking patterns, not a proposal. Real solutions require real conversations.</p>
@@ -300,21 +307,38 @@ const templates = {
 const input = document.getElementById('problem-input');
 const charEl = document.getElementById('char-count');
 const submitBtn = document.getElementById('submit-btn');
+const errEl = document.getElementById('problem-error');
 const loading = document.getElementById('loading');
 const output = document.getElementById('output-section');
 const exToggle = document.getElementById('examples-toggle');
 const exList = document.getElementById('examples-list');
 
-input.addEventListener('input', () => charEl.textContent = input.value.length);
+const MIN = 20;
+function refresh() {
+  charEl.textContent = input.value.length;
+  submitBtn.disabled = input.value.trim().length < MIN;
+  if (input.value.trim().length >= MIN) errEl.hidden = true;
+}
+input.addEventListener('input', refresh);
+refresh();
 
-document.querySelectorAll('.context-toggle').forEach(t => t.addEventListener('click', () => t.classList.toggle('active')));
+document.querySelectorAll('.context-toggle').forEach(t => t.addEventListener('click', () => {
+  const on = t.classList.toggle('active');
+  t.setAttribute('aria-pressed', on ? 'true' : 'false');
+}));
 
-exToggle.addEventListener('click', () => { exToggle.classList.toggle('open'); exList.classList.toggle('visible'); });
+exToggle.addEventListener('click', () => {
+  const open = exList.classList.toggle('visible');
+  exToggle.classList.toggle('open', open);
+  exToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
 
 document.querySelectorAll('.example-item').forEach(i => i.addEventListener('click', () => {
   input.value = examples[i.dataset.example];
-  charEl.textContent = input.value.length;
+  refresh();
   exList.classList.remove('visible');
+  exToggle.setAttribute('aria-expanded', 'false');
+  input.focus();
 }));
 
 function detect(t) {
@@ -338,8 +362,11 @@ function render(tpl) {
   output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function showError(msg) { errEl.textContent = msg; errEl.hidden = false; }
+
 submitBtn.addEventListener('click', () => {
-  if (input.value.trim().length < 20) { alert('Please describe your problem in more detail.'); return; }
+  if (input.value.trim().length < MIN) { showError('Add a bit more detail — at least ' + MIN + ' characters.'); input.focus(); return; }
+  errEl.hidden = true;
   submitBtn.style.display = 'none';
   loading.style.display = 'flex';
   output.classList.remove('visible');
@@ -347,7 +374,7 @@ submitBtn.addEventListener('click', () => {
     loading.style.display = 'none';
     submitBtn.style.display = 'inline-flex';
     const key = detect(input.value);
-    if (!key) { alert('I couldn\'t match a specific pattern to your problem. Try including more detail about the domain — logistics, enterprise sales, AI/ML, legacy systems, or marketplace dynamics.'); return; }
+    if (!key) { showError("I couldn't match a specific pattern. Try adding detail about the domain — logistics, enterprise sales, AI/ML, legacy systems, or marketplace dynamics."); return; }
     render(templates[key]);
   }, 1200);
 });

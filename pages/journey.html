@@ -43,7 +43,7 @@
 
   <main id="main">
     <!-- Page Header -->
-    <section class="section">
+    <section class="section page-intro">
       <div class="container">
         <div class="section-header">
           <p class="section-label">Decision Log</p>
@@ -61,7 +61,7 @@
     <!-- Decision Pattern Summary -->
     <section class="section-sm" style="background-color: var(--color-bg-subtle);">
       <div class="container content-narrow">
-        <p class="section-label" style="margin-bottom: var(--space-6);">The Pattern</p>
+        <p class="section-label" style="margin-bottom: var(--space-6);">What These Decisions Share</p>
         <p style="font-size: var(--text-lg); color: var(--color-text-secondary); line-height: 1.7;">
           Across a portfolio of AI products, a consistent decision pattern emerges:
         </p>
@@ -88,6 +88,16 @@
     <!-- Decision Log Entries -->
     <section class="section-sm">
       <div class="container content-narrow">
+        <nav class="journey-toc" aria-label="Decisions index">
+          <p class="section-label">The Log · 5 Decisions</p>
+          <ol class="journey-toc-list">
+            <li><a href="#metric-decision"><span class="toc-date">Jun 2026</span> Built a Metric Where None Existed</a></li>
+            <li><a href="#shipping"><span class="toc-date">May 2026</span> Chose Shipping Over Building</a></li>
+            <li><a href="#marie-auth"><span class="toc-date">Apr 2026</span> Reversed My Own Architecture for the User</a></li>
+            <li><a href="#governance-runtime"><span class="toc-date">Mar 2026</span> Made the Runtime Autonomous — and Auditable</a></li>
+            <li><a href="#provider-standard"><span class="toc-date">Feb 2026</span> Standardized on One Model Provider</a></li>
+          </ol>
+        </nav>
         <div class="journey-list">
 
           <!-- Entry 1: A metric where none existed -->
@@ -151,9 +161,9 @@
           </article>
 
           <!-- Entry 2: Shipping over building -->
-          <article class="journey-entry observe-animation">
+          <article class="journey-entry observe-animation" id="shipping">
             <div class="journey-date">
-              <time datetime="2026-06">2026, ongoing</time>
+              <time datetime="2026-05">May 2026</time>
             </div>
             <div class="journey-content">
               <h3>Chose Shipping Over Building</h3>
@@ -208,7 +218,7 @@
           </article>
 
           <!-- Entry 3: Reversed my own architecture -->
-          <article class="journey-entry observe-animation">
+          <article class="journey-entry observe-animation" id="marie-auth">
             <div class="journey-date">
               <time datetime="2026-04">Apr 2026</time>
             </div>
@@ -264,9 +274,9 @@
           </article>
 
           <!-- Entry 4: Governance-first runtime -->
-          <article class="journey-entry observe-animation">
+          <article class="journey-entry observe-animation" id="governance-runtime">
             <div class="journey-date">
-              <time datetime="2026-01">2025–2026</time>
+              <time datetime="2026-03">Mar 2026</time>
             </div>
             <div class="journey-content">
               <h3>Made the Runtime Autonomous — and Auditable</h3>
@@ -322,9 +332,9 @@
           </article>
 
           <!-- Entry 5: Standardize on one provider -->
-          <article class="journey-entry observe-animation">
+          <article class="journey-entry observe-animation" id="provider-standard">
             <div class="journey-date">
-              <time datetime="2026-04">Apr 2026</time>
+              <time datetime="2026-02">Feb 2026</time>
             </div>
             <div class="journey-content">
               <h3>Standardized on One Model Provider — With Exceptions</h3>

@@ -20,7 +20,14 @@
   <style>
     .essay-full { max-width: 720px; margin: 0 auto; }
     .essay-full h2 { font-size: var(--text-3xl); margin-bottom: var(--space-6); }
-    .essay-full h3 { font-family: var(--font-body); font-size: var(--text-lg); font-weight: 500; margin-top: var(--space-8); margin-bottom: var(--space-4); }
+    .essay-full h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; letter-spacing: -0.01em; margin-top: var(--space-8); margin-bottom: var(--space-4); }
+    .essay-index { list-style: none; margin-top: var(--space-6); }
+    .essay-index li { border-top: 1px solid var(--color-border); }
+    .essay-index li:last-child { border-bottom: 1px solid var(--color-border); }
+    .essay-index a { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-6); padding: var(--space-4) 0; color: var(--color-text-primary); transition: color var(--transition-fast); }
+    .essay-index a:hover { color: var(--color-text-secondary); }
+    .essay-index-title { font-family: var(--font-display); font-size: var(--text-xl); }
+    .essay-index-meta { flex: 0 0 auto; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-tertiary); white-space: nowrap; }
     .essay-full p { font-size: var(--text-base); line-height: 1.8; margin-bottom: var(--space-6); color: var(--color-text-secondary); }
     .essay-full p:first-of-type { font-size: var(--text-lg); }
     .essay-full blockquote { border-left: 3px solid var(--color-border-strong); padding-left: var(--space-6); margin: var(--space-8) 0; font-style: italic; color: var(--color-text-secondary); }
@@ -56,7 +63,7 @@
 
   <main id="main">
     <!-- Page Header -->
-    <section class="section">
+    <section class="section page-intro">
       <div class="container">
         <div class="section-header">
           <p class="section-label">Essays & Ideas</p>
@@ -67,6 +74,20 @@
             These aren't hot takes. They're lessons I've paid for.
           </p>
         </div>
+      </div>
+    </section>
+
+    <!-- Essay index -->
+    <section class="section-sm" id="all-essays">
+      <div class="container essay-full">
+        <p class="section-label">5 Essays</p>
+        <ol class="essay-index">
+          <li><a href="#governance-moat"><span class="essay-index-title">Governance Is the Moat</span><span class="essay-index-meta">AI Systems · 8 min</span></a></li>
+          <li><a href="#feature-complete"><span class="essay-index-title">Feature-Complete Is Not Done</span><span class="essay-index-meta">Operating · 6 min</span></a></li>
+          <li><a href="#number-not-dashboard"><span class="essay-index-title">Build a Number, Not a Dashboard</span><span class="essay-index-meta">Product · 7 min</span></a></li>
+          <li><a href="#agents-do-less"><span class="essay-index-title">Agents Should Do Less</span><span class="essay-index-meta">AI Systems · 7 min</span></a></li>
+          <li><a href="#standardize-default"><span class="essay-index-title">Standardize the Default, Not the Dogma</span><span class="essay-index-meta">Engineering · 6 min</span></a></li>
+        </ol>
       </div>
     </section>
 

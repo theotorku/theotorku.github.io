@@ -17,6 +17,11 @@
   <style>
     .simulator-container { max-width: 800px; margin: 0 auto; }
     .simulator-progress { display: flex; gap: var(--space-2); margin-bottom: var(--space-8); }
+    .sim-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .sim-counter { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-tertiary); }
+    .sim-restart { background: none; border: none; cursor: pointer; font-family: var(--font-body); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-tertiary); transition: color var(--transition-fast); padding: 0; }
+    .sim-restart:hover { color: var(--color-text-primary); }
+    .option-card:focus-visible { outline: 2px solid var(--color-text-primary); outline-offset: 3px; }
     .progress-step { flex: 1; height: 3px; background-color: var(--color-border); border-radius: 2px; transition: background-color var(--transition-base); }
     .progress-step.completed { background-color: var(--color-text-primary); }
     .progress-step.current { background-color: var(--color-text-secondary); }
@@ -92,22 +97,31 @@
   </nav>
 
   <main id="main">
-    <section class="section">
+    <section class="section page-intro">
       <div class="container simulator-container">
         <div id="simulator-app">
           <div id="intro-screen" class="intro-screen">
-            <div class="intro-icon">⚖️</div>
+            <div class="intro-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="5.5" r="2.4"/><circle cx="19" cy="18.5" r="2.4"/>
+                <path d="M7.3 11C11.5 9.2 13 7 16.6 6"/><path d="M7.3 13C11.5 14.8 13 17 16.6 18"/>
+              </svg>
+            </div>
             <h1 class="intro-title">Decision Simulator</h1>
             <p class="intro-description">Experience real decisions I've faced — with incomplete information, competing priorities, and genuine tradeoffs. Make your call, then see what I chose and why.</p>
             <div class="intro-meta">
-              <span>🎯 5 scenarios</span>
-              <span>⏱️ ~8 minutes</span>
-              <span>🧠 Calibrate judgment</span>
+              <span>5 scenarios</span>
+              <span>~8 minutes</span>
+              <span>Calibrate judgment</span>
             </div>
             <button id="start-btn" class="btn btn-primary btn-arrow">Begin Simulation</button>
           </div>
 
           <div id="scenario-screen" style="display: none;">
+            <div class="sim-topbar">
+              <span class="sim-counter" id="sim-counter">Scenario 1 of 5</span>
+              <button type="button" id="restart-top" class="sim-restart">↺ Start over</button>
+            </div>
             <div class="simulator-progress" id="progress-bar"></div>
             <div class="scenario-card fade-in" id="scenario-card">
               <div class="scenario-header">
@@ -279,15 +293,19 @@
       }
 
       function renderScenario(s) {
+        document.getElementById('sim-counter').textContent = `Scenario ${currentScenario + 1} of ${scenarios.length}`;
         document.getElementById('scenario-type').textContent = s.type;
         document.getElementById('scenario-title').textContent = s.title;
         document.getElementById('scenario-context').textContent = s.context;
         document.getElementById('constraints-list').innerHTML = s.constraints.map(c => `<li>${c}</li>`).join('');
-        optionsGrid.innerHTML = s.options.map(o => `<div class="option-card" data-letter="${o.letter}"><div class="option-letter">${o.letter}</div><h4 class="option-title">${o.title}</h4><p class="option-description">${o.description}</p></div>`).join('');
-        document.querySelectorAll('.option-card').forEach(card => card.addEventListener('click', () => handleSelect(card)));
+        optionsGrid.innerHTML = s.options.map(o => `<div class="option-card" data-letter="${o.letter}" role="button" tabindex="0" aria-label="Option ${o.letter}: ${o.title}"><div class="option-letter">${o.letter}</div><h4 class="option-title">${o.title}</h4><p class="option-description">${o.description}</p></div>`).join('');
+        document.querySelectorAll('.option-card').forEach(card => {
+          card.addEventListener('click', () => handleSelect(card));
+          card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSelect(card); } });
+        });
         resultPanel.classList.remove('visible');
         nextBtn.style.display = 'none';
-        actionHint.textContent = 'Select an option above';
+        actionHint.textContent = 'Select an option — or press A–D';
         hasSelected = false;
       }
 
@@ -312,6 +330,7 @@
         actionHint.textContent = '';
         nextBtn.style.display = 'block';
         nextBtn.textContent = currentScenario < scenarios.length - 1 ? 'Next Scenario' : 'See Results';
+        setTimeout(() => resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
       }
 
       function showSummary() {
@@ -323,11 +342,23 @@
         document.getElementById('summary-insight').textContent = insights[score] || insights[2];
       }
 
-      function reset() { currentScenario = 0; userAnswers = []; score = 0; hasSelected = false; summaryScreen.style.display = 'none'; introScreen.style.display = 'block'; }
+      function reset() { currentScenario = 0; userAnswers = []; score = 0; hasSelected = false; summaryScreen.style.display = 'none'; scenarioScreen.style.display = 'none'; introScreen.style.display = 'block'; }
 
       startBtn.addEventListener('click', () => { introScreen.style.display = 'none'; scenarioScreen.style.display = 'block'; renderProgress(); renderScenario(scenarios[0]); });
       nextBtn.addEventListener('click', () => { currentScenario++; if (currentScenario >= scenarios.length) showSummary(); else { renderProgress(); renderScenario(scenarios[currentScenario]); document.querySelector('.scenario-card').scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
       restartBtn.addEventListener('click', reset);
+      document.getElementById('restart-top').addEventListener('click', reset);
+
+      // Keyboard: A–D selects an option; → advances after the reveal
+      document.addEventListener('keydown', (e) => {
+        if (scenarioScreen.style.display === 'none') return;
+        if (!hasSelected && /^[a-d]$/i.test(e.key)) {
+          const card = optionsGrid.querySelector('.option-card[data-letter="' + e.key.toUpperCase() + '"]');
+          if (card) { e.preventDefault(); handleSelect(card); }
+        } else if (hasSelected && e.key === 'ArrowRight' && nextBtn.style.display !== 'none') {
+          e.preventDefault(); nextBtn.click();
+        }
+      });
     })();
   </script>
   <script src="../js/main.js"></script>
